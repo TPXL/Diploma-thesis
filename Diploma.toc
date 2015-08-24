@@ -1,0 +1,18 @@
+\select@language {english}
+\select@language {slovene}
+\contentsline {chapter}{Povzetek}{}{chapter*.2}
+\select@language {english}
+\contentsline {chapter}{Abstract}{}{chapter*.3}
+\select@language {slovene}
+\contentsline {chapter}{\numberline {1}Uvod}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Cilji}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Pregled podro\IeC {\v c}ja}{1}{section.1.2}
+\contentsline {chapter}{\numberline {2}Metode in orodja}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Java in Eclipse}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Format obj datotek}{3}{section.2.2}
+\contentsline {section}{\numberline {2.3}Aplikacija Neck veins}{3}{section.2.3}
+\contentsline {section}{\numberline {2.4}Projekcija teksture na 3d model}{3}{section.2.4}
+\contentsline {chapter}{\numberline {3}Implementacija}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}Samostojna aplikacija}{5}{section.3.1}
+\contentsline {section}{\numberline {3.2}Integracija v Neck veins}{5}{section.3.2}
+\contentsline {chapter}{\numberline {4}Zaklju\IeC {\v c}ek}{7}{chapter.4}
