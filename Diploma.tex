@@ -36,8 +36,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	DIPLOMA INFO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\ttitle}{Vizualizacija medicinskih podatkov}
-\newcommand{\ttitleEn}{Visualization of medical data}
+\newcommand{\ttitle}{Orodje za ročno poravnavo 2D in 3D medicinskih posnetkov}
+\newcommand{\ttitleEn}{A tool for manual alignment of 2D and 3D medical recordings}
 \newcommand{\tsubject}{\ttitle}
 \newcommand{\tsubjectEn}{\ttitleEn}
 \newcommand{\tauthor}{Jure Kolenko}
@@ -331,21 +331,35 @@ Java je objektno orientiran programski jezik, ki ga je razvilo podjetje Sun Micr
 \subsection*{Eclipse}
 Eclipse je odprtokodno integrirano razvojno okolje. V osnovi je namenjeno programiranju Java aplikacij, vendar obstajajo vtičniki tudi za mnoge druge jezike. Prednost uporabe Eclipsa je urejevalnik, ki omogoča samodejno dopolnjevanje izrazov in opozarja na napake, ter razhroščevalnik in prikaz dokumentacije.
 \section{Hranjenje mrežnega modela}
-Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3-dimenzionalnih (3D) modelov. Različica podpira samo del standarda, in sicer zapis za pozicije vozlišč ter definicijo ploskev, ne podpira pa naprimer teksturnih koordinat in normal, saj se v programu ne uporabljajo oziroma se izračunajo.
+Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3-dimenzionalnih (3D) mrežnih modelov. Različica podpira samo del standarda, in sicer zapis za pozicije vozlišč ter definicijo ploskev, ne podpira pa naprimer teksturnih koordinat in normal, saj se v programu ne uporabljajo oziroma se izračunajo.
 \section{Aplikacija za vizualizacijo}
 
 Opis že obstoječe aplikacije s kako sliko ali dvema.
 \section{Strojno pospešen izris 3D grafike}
-D3, OpenGL, izbran OGL ker je what the cool kids use these days.
+Za strojno pospešen izris 3D grafike obstaja več aplikacijsko programerskih vmesnikov, najbolj znana in razširjena pa sta DirectX in OpenGL. DirectX je razvil Microsoft leta 1995 in je namenjen za aplikacije za operacijski sistem Windows, OpenGL pa je leta 1992 razvil Silicon Graphics Inc., sedaj pa ga nadzira neprofitna skupnost Khronos Group, in je namenjen strojno pospešenemu izrisu na večih platformah in v večih jezikih. 
+
+V diplomski nalogi sem uporabil odprtokodno knjižnico LWJGL (lightweight java game library - lahka javanska knjižnica za igre), ki omogoča uporabo vmesnika OpenGL.
+
 \section{Projekcija teksture na 3D model}
-Matematka za tem.
+Za projeciranje teksture je najprej potrebno vedeti kako se izrisujejo sence, prehod na projekcijo pa je nato precej lahek.
+
+Za izris senc je potrebno prizorišče najprej izrisati iz pogleda luči. Luč, ki meče sence, se v računalniški grafiki obnaša enako kot kamera. Ob izrisu ne uporabljamo barv, temveč zapišemo samo globino objekta, oziroma razdaljo do kamere. Pri izrisu prizorišča je nato treba za vsak objekt projecirati tako v pogled kamere kot v pogled luči, nato pa ob senčenju objekta v globinski teksturi preveriti, če je v pogledu luči, in če je ali je najbližji objekt in je osvetljen ali ni najbližji in je zatemnjen. 
+
+Pri izrisu projekcije je potrebno poleg globinske teksture dodati še teksturo s sliko projekcije, nato pa, če je objekt osvetljen namesto uniformne barve svetlobe uporabiti barvo s teksture.
+
 \chapter{Implementacija}
 \section{Programska ovojnica za LWJGL}
-Opis wrapperja za LWJGL.
+
+Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnici LWJGL. OpenGL zahteva veliko knjigovodstva, saj je treba vsa sredstva ročno uničiti, da se pomnilnik na grafični enoti ne zasiči. Ovojnica to poenostavi tako, da OpenGL sredstva zavije v smiselno poimenovane razrede. Ovojnica nudi tudi transformacije med kvaternioni in evklidskimi koti.
+
 \section{Samostojna aplikacija}
-Opis implementacije samostojne aplikacije.
+
+Funkcionalnost 
+
 \section{Integracija v Neck veins}
+
 Opis problemov z integracijo v Neck veins.
+
 \chapter{Zaključek}
 Ful sm zadovoljen, huehuehue.
 \end{document}
