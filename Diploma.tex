@@ -376,11 +376,35 @@ Transformacija (angl. transform) je razred, ki je namenjen hranjenju transformac
 
 Kot posebna transformacija se obravnava tudi kamera, le da so pri kameri premiki ravno obrnjeni, ima pa še dodatne parametre za pogled kamere. Podprti sta dve vrsti kamere: perspektivna in vzporedna.
 
+\subsection*{Ostalo}
+
+Poleg že naštetega ovojnica vsebuje še funkcijo za razhroščevanje, ki napake, ki jih vrača OpenGL, pretvori v berljive nize ter izpiše vrstico v kateri je bila funkcija klicana, kar močno olajša iskanje napak.
+
 \section{Samostojna aplikacija}
 
-Funkcionalnost orodja sem najprej implementiral kot samostojno aplikacijo. 
+Funkcionalnost orodja sem najprej implementiral kot samostojno aplikacijo, saj je tako lažje preveriti pravilnost delovanja. Aplikacija nima uporabniškega vmesnika, implementirane pa so le osnovne kontrole(??), saj služi le dokazovanju delovanja, ne pa tudi dejanski uporabi. Sestavljena je iz testnega razreda, razreda ki implementira dejansko funkcionalnost in razredov za branje Obj datotek, ki pa niso uporabljeni v končni aplikaciji, saj ima ta svoj bralnik. Posnetki se v samostojni aplikaciji naložijo avtomatsko iz testnih datotek.
 
-\section{Integracija v Neck veins}
+(SLIKA)
+
+\subsection*{Premikanje pogleda}
+
+Aplikacija podpira dva pogleda, pogled iz kamere ter pogled iz projektorja. Pogled iz projektorja je namenjen poravnavi 2D in 3D posnetkov, saj je v tem pogledu 2D posnetek pri miru, premika pa se le 3D posnetek. Nepremičnost posnetka v tem pogledu je doseženo s tem, da se pogled in pravokotnik, na katerem je posnetek, obračata in premikata za iste vrednosti. 
+
+\subsection*{2D posnetek}
+
+Dvo dimenzionalni posnetek je rentgenska slika ožilja. Slika se projecira na pravokotnik, ki je prilagojen velikosti slike. Sliko se da v prostoru rotirati neodvisno od modela, kar služi poravnavi, ko pa sta model in slika poravnana, pa se lahko rotira skupaj z modelom.
+
+\subsection*{3D posnetek}
+
+Tri dimenzionalni posnetek je mrežni model ožilja, naložena iz Obj datoteke. 3D posnetek sam po sebi se ne premika, premika se le kamera, kar pa da uporabniku podoben vtis.
+
+\section{Integracija v aplikacijo za vizualizacijo}
+
+Za konec sem funkcionalnost integriral še v aplikacijo za vizualizacijo. Poleg funkcionalnosti samostojne aplikacije je bilo potrebno zagotoviti, da se modul obnaša enako kot že obstoječa aplikacija, kar pa ni bilo čisto mogoče, saj modul uporablja drugačno vrsto kamere kot preostala aplikacija. 
+
+\subsection*{Premikanje pogleda}
+
+Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami za premik levo, desno, naprej in nazaj ter s tipkama 'r' in 'f' za gor in dol. Obrača se s tipkami 'w', 'a', 's', 'd', 'q' in 'e' ter z miško, tako da se lev miškin gumb drži nad objektom in miško premika. Premikanje z miško je, podobno kot v že obstoječi aplikaciji, narejeno s projekcijo kazalca na navidezno kroglo okoli modela, vendar pa je zaradi drugačne vrste kamere izračun preseka drugačen. (*matematika za izračunom*) 
 
 Opis problemov z integracijo v Neck veins.
 
