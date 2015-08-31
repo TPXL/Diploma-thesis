@@ -331,10 +331,21 @@ Java je objektno orientiran programski jezik, ki ga je razvilo podjetje Sun Micr
 \subsection*{Eclipse}
 Eclipse je odprtokodno integrirano razvojno okolje. V osnovi je namenjeno programiranju Java aplikacij, vendar obstajajo vtičniki tudi za mnoge druge jezike. Prednost uporabe Eclipsa je urejevalnik, ki omogoča samodejno dopolnjevanje izrazov in opozarja na napake, ter razhroščevalnik in prikaz dokumentacije.
 \section{Hranjenje mrežnega modela}
+
 Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3-dimenzionalnih (3D) mrežnih modelov. Različica podpira samo del standarda, in sicer zapis za pozicije vozlišč ter definicijo ploskev, ne podpira pa naprimer teksturnih koordinat in normal, saj se v programu ne uporabljajo oziroma se izračunajo.
+
 \section{Aplikacija za vizualizacijo}
 
-Opis že obstoječe aplikacije s kako sliko ali dvema.
+Aplikacija je namenjena prikazovanju ožilja pacienta. Model se da poljubno obračati in premikati, lahko pa se ga tudi ogleduje v stereo prikazu. Modeli žil so prebrani iz datotek tipa Obj. 
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{aplikacija.png}
+\end{center}
+\caption{Glavni prikaz aplikacije za vizualizacijo.}
+\label{aplikacija}
+\end{figure}
+
 \section{Strojno pospešen izris 3D grafike}
 Za strojno pospešen izris 3D grafike obstaja več aplikacijsko programerskih vmesnikov, najbolj znana in razširjena pa sta DirectX in OpenGL. DirectX je razvil Microsoft leta 1995 in je namenjen za aplikacije za operacijski sistem Windows, OpenGL pa je leta 1992 razvil Silicon Graphics Inc., sedaj pa ga nadzira neprofitna skupnost Khronos Group, in je namenjen strojno pospešenemu izrisu na večih platformah in v večih jezikih. 
 
@@ -347,7 +358,29 @@ Za izris senc je potrebno prizorišče najprej izrisati iz pogleda luči. Luč, 
 
 Pri izrisu projekcije je potrebno poleg globinske teksture dodati še teksturo s sliko projekcije, nato pa, če je objekt osvetljen namesto uniformne barve svetlobe uporabiti barvo s teksture.
 
-//slike
+\begin{figure}
+\begin{center}
+\includegraphics[width=12cm, height=10cm, keepaspectratio=true]{globinska_slika.png}
+\end{center}
+\caption{Primer globinske slike. Svetlejši kot je piksel, dlje od kamere je objekt.}
+\label{globinskaslika}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=12cm, height=10cm, keepaspectratio=true]{osencen_model.png}
+\end{center}
+\caption{Primer osenčenega modela. Luč je na desni strani pred modelom.}
+\label{osencenmodel}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=12cm, height=10cm, keepaspectratio=true]{tekstura_projecirana_na_model.png}
+\end{center}
+\caption{Primer projekcije teksture na model.}
+\label{teksturaprojecirananamodel}
+\end{figure}
 
 \chapter{Implementacija}
 \section{Programska ovojnica za LWJGL}
@@ -373,6 +406,8 @@ Točkovni nizi (angl. vertex array object) so OpenGL objekti, ki hranijo stanje 
 \subsection*{Transformacija}
 
 Transformacija (angl. transform) je razred, ki je namenjen hranjenju transformacije objekta, to je rotacija, položaj in velikost. Položaj in velikost sta predstavljena kot vektorja dolžine 3, rotacija pa kot kvaternion. Podprte so rotacije in premiki v lokalnem ter globalnem koordinatnem sistemu, ter rotacije v poljubnem sistemu. Razred vsebuje tudi funkcije za pretvorbo iz kvaternionov v eulerjeve kote, za izračun transformacijske matrike iz stanja transformacije, ter za izračun kvaterniona iz rotacijske matrike.
+
+(Formule za pretvorbe?)
 
 Kot posebna transformacija se obravnava tudi kamera, le da so pri kameri premiki ravno obrnjeni, ima pa še dodatne parametre za pogled kamere. Podprti sta dve vrsti kamere: perspektivna in vzporedna.
 
