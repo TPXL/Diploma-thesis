@@ -334,7 +334,7 @@ Java je objektno orientiran programski jezik, ki ga je razvilo podjetje Sun Micr
 Eclipse je odprtokodno integrirano razvojno okolje. V osnovi je namenjeno programiranju Java aplikacij, vendar obstajajo vtičniki tudi za mnoge druge jezike. Prednost uporabe Eclipsa je urejevalnik, ki omogoča samodejno dopolnjevanje izrazov in opozarja na napake, ter razhroščevalnik in prikaz dokumentacije.
 \section{Hranjenje mrežnega modela}
 
-Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek \textcolor{orange}{[citat]}, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3-dimenzionalnih (3D) mrežnih modelov. \textcolor{red}{Standard je tekstoven, tako da so datoteke zlahka berljive, slabost tega pa je večja velikost datotek.}
+Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek \textcolor{orange}{[citat]}, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3-dimenzionalnih (3D) mrežnih modelov. Standard je tekstoven, tako da so datoteke zlahka berljive, slabost tega pa je večja velikost datotek.
 \renewcommand{\lstlistingname}{Datoteka}
 \renewcommand{\lstlistlistingname}{Seznam datotek}
 \begin{lstlisting}[captionpos=b, frame=single, caption={Primer obj datoteke, ki predstavlja kvadrat.}]
@@ -364,7 +364,7 @@ Aplikacija je namenjena prikazovanju ožilja pacienta. Model se da poljubno obra
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=14cm]{aplikacija.png}
+\includegraphics[width=14cm]{Aplikacija.png}
 \end{center}
 \caption{Glavni prikaz aplikacije za vizualizacijo.}
 \label{aplikacija}
@@ -383,9 +383,9 @@ V diplomski nalogi sem uporabil odprtokodno knjižnico LWJGL (angl. lightweight 
 
 \textcolor{orange}{Tole potrebuje precej "rewrita". To podpoglavje precej predelaj. Po korakih razloži kako se izvede posamezni korak in pomožnosti dodaj kakšno skico, ki ponazarja kaj se v posameznem koraku zgodi. Prav tako navedi vire, v kolikor si kakšnega uporabljal.}
 
-\textcolor{red}{Projekcija teksture na objekt deluje v treh korakih. Najprej je treba izrisati globinsko sliko iz pogleda projektorja, nato ugotoviti kaj na modelu dejansko zadanejo žarki projektorja, potem pa še pravilno pobarvati dele, ki jih žarki zadanejo.}
-\textcolor{red}{\subsection*{Globinska slika}}
-\textcolor{red}{Luč se v računalniški grafiki obnaša enako kot kamera. Objekte se, tako kot pri kameri, projecira v pogled luči, nato pa se objekte izriše, pri tem pa se beleži le razdalja do luči oziroma globina najbližjih objektov v vsaki točki. Slika \ref{globinskaslika} je primer izrisa globinske slike.}
+Projekcija teksture na objekt deluje v treh korakih. Najprej je treba izrisati globinsko sliko iz pogleda projektorja, nato ugotoviti kaj na modelu dejansko zadanejo žarki projektorja, potem pa še pravilno pobarvati dele, ki jih žarki zadanejo.
+\subsection*{Globinska slika}
+Luč se v računalniški grafiki obnaša enako kot kamera. Objekte se, tako kot pri kameri, projecira v pogled luči, nato pa se objekte izriše, pri tem pa se beleži le razdalja do luči oziroma globina najbližjih objektov v vsaki točki. Slika \ref{globinskaslika} je primer izrisa globinske slike.
 
 \begin{figure}[h]
 \begin{center}
@@ -395,8 +395,8 @@ V diplomski nalogi sem uporabil odprtokodno knjižnico LWJGL (angl. lightweight 
 \label{globinskaslika}
 \end{figure}
 
-\textcolor{red}{\subsection*{Izris objekta s sencami}}
-\textcolor{red}{Za izris objekta s sencami, se objekt najprej projecira v pogled kamere in pogled luči. Za vsak delec objekta v pogledu kamere se nato v globinski sliki preveri, če je ta delec viden tudi v pogledu luči. Če je delec viden, se ga osvetli z barvo luči, drugače pa je temnejši. Slika \ref{osencenmodel} je primer tako osenčenega modela.}
+\subsection*{Izris objekta s sencami}
+Za izris objekta s sencami, se objekt najprej projecira v pogled kamere in pogled luči. Za vsak delec objekta v pogledu kamere se nato v globinski sliki preveri, če je ta delec viden tudi v pogledu luči. Če je delec viden, se ga osvetli z barvo luči, drugače pa je temnejši. Slika \ref{osencenmodel} je primer tako osenčenega modela.
 
 \begin{figure}[h]
 \begin{center}
@@ -406,8 +406,8 @@ V diplomski nalogi sem uporabil odprtokodno knjižnico LWJGL (angl. lightweight 
 \label{osencenmodel}
 \end{figure}
 
-\textcolor{red}{\subsection*{Izris objekta s projecirano sliko}}
-\textcolor{red}{Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta delec nahaja, nato pa namesto bele svetlobe vzeti barvo svetlobe, ki je na tem mestu v sliki. Slika \ref{teksturaprojecirananamodel} je primer izrisa s projecirano sliko, kjer je projecirana slika vijolično-siva šahovnica.}
+\subsection*{Izris objekta s projecirano sliko}
+Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta delec nahaja, nato pa namesto bele svetlobe vzeti barvo svetlobe, ki je na tem mestu v sliki. Slika \ref{teksturaprojecirananamodel} je primer izrisa s projecirano sliko, kjer je projecirana slika vijolično-siva šahovnica.
 
 \begin{figure}[h]
 \begin{center}
@@ -419,9 +419,9 @@ V diplomski nalogi sem uporabil odprtokodno knjižnico LWJGL (angl. lightweight 
 
 \textcolor{orange}{Tukaj dodaj še opis podatkov, ki jih bomo uporabljali. Predstaviš da so podatki v OBJ pretvorjeni iz volumetričnih zajetih podatkov kot tudi kakšen je format v katerem so x-ray slike.}
 
-\textcolor{red}{\section{Nabor podatkov}}
-\textcolor{red}{3D posnetki so volumetrični posnetki ožilja možganov, narejeni z magnetno resonanco, ki so nato s pomočjo funkcionalnosti že obstoječe aplikacije pretvorjeni v mrežni model, 2D posnetki pa so rentgenski posnetki ožilja shranjeni kot slikovna datoteka tipa jpeg \textcolor{orange}{[citation needed]}.}
-
+\section{Nabor podatkov}
+3D posnetki so volumetrični posnetki ožilja možganov, narejeni z magnetno resonanco, ki so nato s pomočjo funkcionalnosti že obstoječe aplikacije pretvorjeni v mrežni model, 2D posnetki pa so rentgenski posnetki ožilja shranjeni kot slikovna datoteka tipa jpeg \textcolor{orange}{[citation needed]}.
+\textcolor{orange}{Needs refactoring.}
 \chapter{Implementacija}
 \section{Programska ovojnica za LWJGL}
 
@@ -437,8 +437,7 @@ Prenašanje podatkov na grafično enoto in z nje v OpenGL poteka prek medpomniln
 
 Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejših verzijah se je uporabljal fiksen cevovod, ki pa je okornejši in manj zmogljiv od uporabniških programov. Ovojnica podpira pet vrst senčilnikov, in sicer senčilnike za oglišča (angl. vertex shader), za geometrijo (geometry), za drobce (fragment) in za deljenje (tesselation), obstaja pa še senčilnik za izračunavanje (compute shader), ki pa ni podprt. Senčilniki se združujejo v programe, ki tvorijo fleksibilen cevovod za izris.
 
-\textcolor{red}{
-OpenGL senčilniki se pišejo v jeziku GLSL (angl. OpenGL Shading Language). GLSL je osnovan na jeziku C in omogoča prenosljivost med operacijskimi sistemi in različnimi proizvajalci strojne opreme. }
+OpenGL senčilniki se pišejo v jeziku GLSL (angl. OpenGL Shading Language). GLSL je osnovan na jeziku C in omogoča prenosljivost med operacijskimi sistemi in različnimi proizvajalci strojne opreme.
 \subsection*{Teksture}
 
 Teksture v OpenGL so objekti, ki vsebujejo eno ali več slik, ter so uporabni kot vir slikovnih podatkov v senčilnikih ali kot tarča za izris v medpomnilnikih za okvirje. Ker je inicializacija teksture v OpenGL precej kompleksna, ovojnica poskrbi za inicializacijo osnovnih parametrov.
@@ -456,9 +455,8 @@ Transformacija (angl. transform) je razred, ki je namenjen hranjenju transformac
 (Formule za pretvorbe?)
 
 Kot posebna transformacija se obravnava tudi kamera, le da so pri kameri premiki ravno obrnjeni, ima pa še dodatne parametre za pogled kamere. Podprti sta dve vrsti kamere: perspektivna in vzporedna.
-\textcolor{red}{\subsection*{Izjeme}}
-\textcolor{red}{Ovojnica podpira več vrst izjem. OpenGL sam ne ustavi izvajanja programa ob napaki, vendar pa je izris nepravilen, zato ob nekaterih operacijah ovojnica preverja, če je na grafični enoti vse v redu. Izjeme se lahko prožijo, ko se senčilnik ne prevede pravilno, ko se program ne poveže pravilno ali ko se medpomnilnik za okvirje ne inicializira pravilno.
-}
+\subsection*{Izjeme}
+Ovojnica podpira več vrst izjem. OpenGL sam ne ustavi izvajanja programa ob napaki, vendar pa je izris nepravilen, zato ob nekaterih operacijah ovojnica preverja, če je na grafični enoti vse v redu. Izjeme se lahko prožijo, ko se senčilnik ne prevede pravilno, ko se program ne poveže pravilno ali ko se medpomnilnik za okvirje ne inicializira pravilno.
 
 \subsection*{Ostalo}
 
@@ -468,13 +466,21 @@ Poleg že naštetega ovojnica vsebuje še funkcijo za razhroščevanje, ki napak
 
 \section{Samostojna aplikacija}
 
-Funkcionalnost orodja sem najprej implementiral kot samostojno aplikacijo, saj je tako lažje preveriti pravilnost delovanja. Aplikacija nima uporabniškega vmesnika, implementiran pa je le osnovni uporabniški nadzor, saj služi le kot primer delovanja, ne pa tudi dejanski uporabi. Sestavljena je iz testnega razreda, razreda ki implementira dejansko funkcionalnost in razredov za branje Obj datotek, ki pa niso uporabljeni v končni aplikaciji, saj ima ta svoj bralnik. Posnetki se v samostojni aplikaciji naložijo avtomatsko iz testnih datotek.
+Funkcionalnost orodja sem najprej implementiral kot samostojno aplikacijo, saj je tako lažje preveriti pravilnost delovanja. Aplikacija nima uporabniškega vmesnika, implementiran pa je le osnovni uporabniški nadzor, saj služi le kot primer delovanja, ne pa tudi dejanski uporabi. Sestavljena je iz testnega razreda, razreda ki implementira dejansko funkcionalnost in razredov za branje Obj datotek, ki pa niso uporabljeni v končni aplikaciji, saj ima ta svoj bralnik. Posnetki se v samostojni aplikaciji ob zagonu naložijo avtomatsko iz testnih datotek.
 
-(SLIKA)
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=12cm, height=10cm, keepaspectratio=true]{Samostojna_aplikacija.png}
+\end{center}
+\caption{Pogled samostojne aplikacije.}
+\label{teksturaprojecirananamodel}
+\end{figure}
 
 \subsection*{Premikanje pogleda}
 
-Aplikacija podpira dva pogleda, pogled iz kamere ter pogled iz projektorja \textcolor{orange}{Kaj je en, kaj je drug, kakšna je razlika, morda skica}. Pogled iz projektorja je namenjen poravnavi 2D in 3D posnetkov, saj je v tem pogledu 2D posnetek pri miru, premika pa se le 3D posnetek. Nepremičnost posnetka v tem pogledu je doseženo s tem, da se pogled in pravokotnik, na katerem je posnetek, obračata in premikata za iste vrednosti. 
+Aplikacija podpira dva pogleda, pogled iz kamere ter pogled iz projektorja. \textcolor{red}{Pogled iz kamere je glavni pogled, v katerem naj bi si uporabnik ogledoval model, na katerega je projecirana tekstura. V tem pogledu se da s kamero poljubno premikati in krožiti okrog modela in projektorja, med tem ko sta ta pri miru. Pogled iz projektorja je namenjen poravnavi projecirane teksture z modelom. V tem pogledu se prizorišče izrisuje iz iste smeri kot sveti projektor, s premikanjem le-tega pa uporabnik poravnava 2D in 3D posnetka.}
+
+ \textcolor{orange}{Kaj je en, kaj je drug, kakšna je razlika, morda skica}.
 \textcolor{orange}{Tole je potrebno opisati na bolj razumljiv način.}
 
 \subsection*{2D posnetek}
@@ -487,15 +493,15 @@ Tri dimenzionalni posnetek je mrežni model ožilja, naložen iz Obj datoteke. 3
 
 \section{Integracija v aplikacijo za vizualizacijo}
 
-Za konec sem funkcionalnost integriral še v aplikacijo za vizualizacijo. Poleg funkcionalnosti samostojne aplikacije je bilo potrebno zagotoviti, da se modul obnaša enako kot že obstoječa aplikacija, kar pa ni bilo čisto mogoče, saj modul uporablja drugačno vrsto kamere kot preostala aplikacija. 
+Za konec sem funkcionalnost integriral še v aplikacijo za vizualizacijo. Poleg funkcionalnosti samostojne aplikacije je bilo potrebno zagotoviti, da se modul obnaša čim bolj podobno že obstoječi aplikaciji, kar pa ni bilo čisto mogoče, saj modul uporablja drugačno vrsto kamere kot preostala aplikacija. 
 
 \subsection*{Premikanje pogleda}
 
 Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami za premik levo, desno, naprej in nazaj ter s tipkama 'r' in 'f' za gor in dol. Obrača se s tipkami 'w', 'a', 's', 'd', 'q' in 'e' ter z miško, tako da se lev miškin gumb drži nad objektom in miško premika. Premikanje z miško je, podobno kot v že obstoječi aplikaciji, narejeno s projekcijo kazalca na navidezno kroglo okoli modela, vendar pa je zaradi drugačne vrste kamere izračun preseka drugačen. (*matematika za izračunom*) 
 
 
-\textcolor{red}{\subsection*{Nalaganje datotek}}
-\textcolor{red}{Funkcionalnost za nalaganje datotek je obstajala že v osnovni aplikaciji. Uporabnik s pritiskom na gumb \emph{'odpri'} dobi pojavno okno, v katerem izbira datoteke. Podprti formati so bili mhd za volumetrične datoteke, ter obj za mrežne modele. Moral sem dodati še možnost za nalaganje slikovnih datotek v standardnih formatih jpeg \textcolor{orange}{[citation needed]} in png \textcolor{orange}{[citation needed]}. Java podpira ta dva formata v svoji standardni knjižnici, tako da je bila implementacija preprosta.}
+\subsection*{Nalaganje datotek}
+Funkcionalnost za nalaganje datotek je obstajala že v osnovni aplikaciji. Uporabnik s pritiskom na gumb \emph{'odpri'} dobi pojavno okno, v katerem izbira datoteke. Podprti formati so bili mhd za volumetrične datoteke, ter obj za mrežne modele. Moral sem dodati še možnost za nalaganje slikovnih datotek v standardnih formatih jpeg \textcolor{orange}{[citation needed]} in png \textcolor{orange}{[citation needed]}. Java podpira ta dva formata v svoji standardni knjižnici, tako da je bila implementacija preprosta.
 
 \textcolor{orange}{Manjka ti še predstavitev osnovne aplikacije in predstavitev modulov, ki si jih adaptiral, uporabljal pri svojem delu.}
 
