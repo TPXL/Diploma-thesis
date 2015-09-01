@@ -419,7 +419,7 @@ V diplomski nalogi sem uporabil odprtokodno knjižnico LWJGL (angl. lightweight 
 \textcolor{orange}{Tukaj dodaj še opis podatkov, ki jih bomo uporabljali. Predstaviš da so podatki v OBJ pretvorjeni iz volumetričnih zajetih podatkov kot tudi kakšen je format v katerem so x-ray slike.}
 
 \textcolor{red}{\section{Nabor podatkov}}
-\textcolor{red}{}
+\textcolor{red}{3D posnetki so volumetrični posnetki ožilja možganov, narejeni z magnetno resonanco, ki so nato s pomočjo funkcionalnosti že obstoječe aplikacije pretvorjeni v mrežni model, 2D posnetki pa so rentgenski posnetki ožilja shranjeni kot slikovna datoteka tipa jpeg \textcolor{orange}{[citation needed]}.}
 
 \chapter{Implementacija}
 \section{Programska ovojnica za LWJGL}
@@ -480,7 +480,7 @@ Dvo dimenzionalni posnetek je rentgenska slika ožilja. Slika se projecira na pr
 
 \subsection*{3D posnetek}
 
-Tri dimenzionalni posnetek je mrežni model ožilja, naložena iz Obj datoteke. 3D posnetek sam po sebi se ne premika, premika se le kamera, kar pa da uporabniku podoben vtis.
+Tri dimenzionalni posnetek je mrežni model ožilja, naložen iz Obj datoteke. 3D posnetek se sam po sebi se ne premika, premika se le kamera, kar pa da uporabniku podoben vtis.
 
 \section{Integracija v aplikacijo za vizualizacijo}
 
@@ -490,7 +490,12 @@ Za konec sem funkcionalnost integriral še v aplikacijo za vizualizacijo. Poleg 
 
 Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami za premik levo, desno, naprej in nazaj ter s tipkama 'r' in 'f' za gor in dol. Obrača se s tipkami 'w', 'a', 's', 'd', 'q' in 'e' ter z miško, tako da se lev miškin gumb drži nad objektom in miško premika. Premikanje z miško je, podobno kot v že obstoječi aplikaciji, narejeno s projekcijo kazalca na navidezno kroglo okoli modela, vendar pa je zaradi drugačne vrste kamere izračun preseka drugačen. (*matematika za izračunom*) 
 
+
+\textcolor{red}{\subsection*{Nalaganje datotek}}
+\textcolor{red}{Funkcionalnost za nalaganje datotek je obstajala že v osnovni aplikaciji. Uporabnik s pritiskom na gumb \emph{'odpri'} dobi pojavno okno, v katerem izbira datoteke. Podprti formati so bili mhd za volumetrične datoteke, ter obj za mrežne modele. Moral sem dodati še možnost za nalaganje slikovnih datotek v standardnih formatih jpeg \textcolor{orange}{[citation needed]} in png \textcolor{orange}{[citation needed]}. Java podpira ta dva formata v svoji standardni knjižnici, tako da je bila implementacija preprosta.}
+
 \textcolor{orange}{Manjka ti še predstavitev osnovne aplikacije in predstavitev modulov, ki si jih adaptiral, uporabljal pri svojem delu.}
+
 
 \chapter{Zaključek}
 Ful sm zadovoljen, huehuehue.
