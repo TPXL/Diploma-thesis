@@ -337,31 +337,36 @@ Eclipse je odprtokodno integrirano razvojno okolje. V osnovi je namenjeno progra
 Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek \textcolor{orange}{[citat]}, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3-dimenzionalnih (3D) mrežnih modelov. Standard je tekstoven, tako da so datoteke zlahka berljive, slabost tega pa je večja velikost datotek.
 \renewcommand{\lstlistingname}{Datoteka}
 \renewcommand{\lstlistlistingname}{Seznam datotek}
-\begin{lstlisting}[captionpos=b, frame=single, caption={Primer obj datoteke, ki predstavlja kvadrat.}]
+\begin{lstlisting}[captionpos=b, frame=single, caption={Primer obj datoteke, ki predstavlja kvadrat.}, breaklines=true, firstline=1, numbers=left]
+#Komentarji so vrstice, ki se zacnejo z znakom '#'
+#Vrstice, ki se zacnejo z 'v' predstavljajo ogljisca 
 v -1 -1 0
 v 1 -1 0
 v -1 1 0
 v 1 1 0
+#Vrstice, ki se zacnejo z 'vt' predstavljajo teksturne koordinate
 vt 0 0 0
 vt 1 0 0
 vt 0 1 0
 vt 1 1 0
+#Vrstice, ki se zacnejo z 'vn' predstavljajo normale (pravokotnice?)
 vn 0 0 1
 vn 0 0 1
 vn 0 0 1
 vn 0 0 1
+#Vrstice ki se zacnejo s 'f' predstavljajo ploskve
 f 1/1/1 2/2/2 4/4/4
 f 1/1/1 4/4/4 3/3/3
 \end{lstlisting}
 
 Različica podpira samo del standarda, in sicer zapis za položaje vozlišč ter definicijo ploskev, ne podpira pa naprimer teksturnih koordinat in normal, saj se v programu ne uporabljajo oziroma se izračunajo.
-
-\textcolor{orange}{Lahko podaš tudi primer zapisa trikotnika ali kakšne druge geometrije}
+\textcolor{orange}{Tukaj dodaj razlago posamezne vrstice v smislu ("Vrstice, ki se pričnejo z 'v' predstavljajo vozlišča, z 'vt' teksturne koordinate ...", dodaj tudi povezavo na vir z osnovno definicijo: http://www.martinreddy.net/gfx/3d/OBJ.spec}
 
 \section{Aplikacija za vizualizacijo}
 
 Aplikacija je namenjena prikazovanju ožilja pacienta. Model se da poljubno obračati in premikati, lahko pa se ga tudi ogleduje v stereo prikazu. Modeli žil so prebrani iz datotek tipa Obj. 
 
+\textcolor{orange}{Tukaj pride še o Neck\_Veinsih nekoliko podrobneje, prav tako lahko kto vire navedeš tako dosedanja diplomska dela kot tudi članke, ki smo jih s tega področja objavili. Članke najdeš na moji COBISS strani.}
 \begin{figure}
 \begin{center}
 \includegraphics[width=14cm]{Aplikacija.png}
@@ -377,15 +382,15 @@ Za strojno pospešen izris 3D grafike obstaja več aplikacijskih programerskih v
 
 V diplomski nalogi sem uporabil odprtokodno knjižnico LWJGL (angl. lightweight java game library), ki omogoča uporabo vmesnika OpenGL.
 
-\textcolor{red}{Opis OpenGLja.}
+\textcolor{orange}{Opis OpenGLja.}
 
+\textcolor{red}{OpenGL doda višjenivojsko abstrakcijo grafične procesne enote. Obstaja več različnih tipov grafičnih procesnih enot z različnimi zmogljivostmi, ki pa jih zaradi abstrakcije lahko programiramo z enotnim programskim vmesnikom. }
+\textcolor{red}{}
 \section{Projekcija teksture na 3D model}
 
-\textcolor{orange}{Tole potrebuje precej "rewrita". To podpoglavje precej predelaj. Po korakih razloži kako se izvede posamezni korak in pomožnosti dodaj kakšno skico, ki ponazarja kaj se v posameznem koraku zgodi. Prav tako navedi vire, v kolikor si kakšnega uporabljal.}
-
-Projekcija teksture na objekt deluje v treh korakih. Najprej je treba izrisati globinsko sliko iz pogleda projektorja, nato ugotoviti kaj na modelu dejansko zadanejo žarki projektorja, potem pa še pravilno pobarvati dele, ki jih žarki zadanejo.
+Projekcija teksture na objekt deluje v treh korakih. Najprej je potrebno izrisati globinsko sliko iz pogleda projektorja \textcolor{orange}{[Kaj je projektor - to razloži]}, nato ugotoviti kaj na modelu dejansko zadanejo žarki projektorja, potem pa še pravilno pobarvati dele, ki jih žarki zadanejo.
 \subsection*{Globinska slika}
-Luč se v računalniški grafiki obnaša enako kot kamera. Objekte se, tako kot pri kameri, projecira v pogled luči, nato pa se objekte izriše, pri tem pa se beleži le razdalja do luči oziroma globina najbližjih objektov v vsaki točki. Slika \ref{globinskaslika} je primer izrisa globinske slike.
+Luč se v računalniški grafiki obnaša enako kot kamera. Objekte se, tako kot pri kameri, projicira v pogled luči, nato pa se objekte izriše, pri tem pa se beleži le razdalja do luči oziroma globina najbližjih objektov v vsaki točki. Slika \ref{globinskaslika} je primer izrisa globinske slike.
 
 \begin{figure}[h]
 \begin{center}
@@ -394,9 +399,10 @@ Luč se v računalniški grafiki obnaša enako kot kamera. Objekte se, tako kot 
 \caption{Primer globinske slike. Svetlejši kot je piksel, dlje od kamere je objekt.}
 \label{globinskaslika}
 \end{figure}
+\textcolor{orange}{Dobro bi bilo dodati lokacijo luči, da se bolje razumejo stvari.}
 
 \subsection*{Izris objekta s sencami}
-Za izris objekta s sencami, se objekt najprej projecira v pogled kamere in pogled luči. Za vsak delec objekta v pogledu kamere se nato v globinski sliki preveri, če je ta delec viden tudi v pogledu luči. Če je delec viden, se ga osvetli z barvo luči, drugače pa je temnejši. Slika \ref{osencenmodel} je primer tako osenčenega modela.
+Za izris objekta s sencami, se objekt najprej projicira v pogled kamere in pogled luči. Za vsak delec objekta v pogledu kamere se nato v globinski sliki preveri, če je ta delec viden tudi v pogledu luči. Če je delec viden, se ga osvetli z barvo luči, drugače pa je temnejši \textcolor{orange}{[Bolj prav je, da je črn, torej povsem temen.]}\textcolor{red}{[Ni čisto črn zaradi ambientne svetlobe?]}. Slika \ref{osencenmodel} je primer tako osenčenega modela.
 
 \begin{figure}[h]
 \begin{center}
@@ -405,8 +411,9 @@ Za izris objekta s sencami, se objekt najprej projecira v pogled kamere in pogle
 \caption{Primer osenčenega modela. Luč je na desni strani pred modelom.}
 \label{osencenmodel}
 \end{figure}
+\textcolor{orange}{Dobro bi bilo dodati lokacijo luči, da se bolje razumejo stvari. Deli geometrije, ki jih luč ne obsije so črni.}
 
-\subsection*{Izris objekta s projecirano sliko}
+\subsection*{Izris objekta s projicirano sliko}
 Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta delec nahaja, nato pa namesto bele svetlobe vzeti barvo svetlobe, ki je na tem mestu v sliki. Slika \ref{teksturaprojecirananamodel} je primer izrisa s projecirano sliko, kjer je projecirana slika vijolično-siva šahovnica.
 
 \begin{figure}[h]
@@ -425,7 +432,7 @@ Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta 
 \chapter{Implementacija}
 \section{Programska ovojnica za LWJGL}
 
-Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnici LWJGL. OpenGL zahteva veliko knjigovodstva \textcolor{orange}{Ni ravno ustrezen izraz. To opiši.}, saj je treba vsa sredstva, kot so medpomnilniki, senčilniki, teksture in več, ročno uničiti, da se pomnilnik na grafični enoti ne zasiči. Ovojnica to poenostavi tako, da OpenGL sredstva zavije v smiselno poimenovane razrede. Ovojnica nudi tudi transformacije med kvaternioni in evklidskimi koti in razrede za transformacije in kamere.
+Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnici LWJGL. OpenGL zahteva veliko knjigovodstva \textcolor{orange}{Ni ravno ustrezen izraz. To opiši.}, saj je potrebno vsa sredstva, kot so medpomnilniki, senčilniki, teksture in več, ročno uničiti, da se pomnilnik na grafični enoti ne zasiči. Ovojnica to poenostavi tako, da OpenGL sredstva zavije v smiselno poimenovane razrede. Ovojnica nudi tudi transformacije med kvaternioni in evklidskimi koti in razrede za transformacije in kamere.
 
 \subsection*{Medpomnilniki}
 
@@ -435,9 +442,62 @@ Prenašanje podatkov na grafično enoto in z nje v OpenGL poteka prek medpomniln
 
 \textcolor{orange}{V katerem jeziku se pišejo. Dobro bi bilo omeniti, da senčilniki nadomestijo del fiksnega cevovoda in katerega.}
 
-Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejših verzijah se je uporabljal fiksen cevovod, ki pa je okornejši in manj zmogljiv od uporabniških programov. Ovojnica podpira pet vrst senčilnikov, in sicer senčilnike za oglišča (angl. vertex shader), za geometrijo (geometry), za drobce (fragment) in za deljenje (tesselation), obstaja pa še senčilnik za izračunavanje (compute shader), ki pa ni podprt. Senčilniki se združujejo v programe, ki tvorijo fleksibilen cevovod za izris.
+\textcolor{red}{Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejših verzijah se je uporabljal fiksen cevovod za izris, v novejših verzijah pa so nekateri deli programabilni. Slika \ref{filerenderingpipeline} prikazuje potek cevovoda od podatkov do slike.}
 
-OpenGL senčilniki se pišejo v jeziku GLSL (angl. OpenGL Shading Language). GLSL je osnovan na jeziku C in omogoča prenosljivost med operacijskimi sistemi in različnimi proizvajalci strojne opreme.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=12cm, height=10cm, keepaspectratio=true]{File_RenderingPipeline.png}
+\end{center}
+\caption{Skica cevovoda za izris. Rumeni pravokotniki so fiksni, modri pa so v novejših različicah programabilni.}
+\label{filerenderingpipeline}
+\end{figure}
+
+\begin{itemize}
+\item Specifikacija oglišč
+
+\textcolor{red}{V tej fazi cevovoda uporabnik poda seznam oglišč in kako se združujejo v osnovne like kot so točke, črte, trikotniki in seznami trikotnikov.}
+\item Senčilnik za oglišča
+
+\textcolor{red}{
+Senčilniki za oglišča so uporabniški podprogrami, ki izvajajo poljubne operacije nad posameznimi oglišči. Uporabnik lahko določa izhodne spremenljivke, vendar pa mora med njimi nujno biti položaj. Ta faza cevovoda je obvezna.}
+\item Senčilnik za deljenje ploskev
+
+\textcolor{red}{
+Deljenje ploskev je neobvezni del cevovoda. Uporabnik definira dva senčilnika, senčilnik za nadzor deljenja in senčilnik za izračun deljenja. Prvi lahko deluje samostojno, drugi pa nujno potrebuje še prvega. V senčilniku za nadzor se izračuna kako podrobno se bodo liki delili, v senčilniku za izračun pa se izračunajo novi liki.}
+\item Senčilnik za geometrijo
+
+\textcolor{red}{
+Tudi senčilniki za geometrijo so neobvezni, definira pa jih uporabnik. Kot vhodne podatke dobijo osnovne like, ki pa jih lahko zavržejo, spremenijo in delijo.}
+\item Naknadna obdelava oglišč
+
+\textcolor{red}{
+V tej fazi se liki iz prejšnjih faz zavržejo, če ne spadajo v pogled kamere, oziramo razrežejo, če so delno v pogledu kamere. Po želji se lahko podatki tu shranijo v medpomnilnik, da jih ni potrebno ponovno računati, če se ne bodo spreminjali.}
+\item Sestavljanje osnovnih likov
+
+\textcolor{red}{
+V tej fazi se podatki iz prejšnjih faz pretvorijo v osnovne like, ki smo jih hoteli izrisati. Naprimer, če so vhodni podatki trikotniki, želimo pa le izris črt, se bo tu vsak trikotnik razdelil v tri črte. Tu se lahko cevovod konča, če želimo le izračunati podatke za pozneje, ne pa jih tudi izrisati. }
+\item Rasterizacija
+
+\textcolor{red}{
+Osnovni liki se tu razdelijo v diskretne delce, ki služijo izračunu končne barve piksla.}
+\item Senčilnik za delce
+
+\textcolor{red}{
+V senčilniku za delce se izračuna barva piksla in njegova globina. Ta del cevovoda je neobvezen, vendar se, če ga ni, izračuna le globina delca.}
+\item Procesiranje delcev
+
+\textcolor{red}{
+Tu se, če uporabnik tako nastavi, določi kateri delci, izmed tistih na istem položaju, se bodo obdržali glede na globino, šablono in druge lastnosti. Na koncu se barve prosojnih delcev zmešajo, nato pa se rezultat zapiše na zaslon ali v medpomnilnik za okvirje.}
+\end{itemize}
+\textcolor{orange}{https://www.opengl.org/wiki/Rendering\_Pipeline\_Overview}
+
+\textcolor{red}{Ovojnica podpira pet vrst senčilnikov, in sicer senčilnike za oglišča (angl. vertex shader), za geometrijo (geometry), za drobce (fragment) in za deljenje (tesselation), obstaja pa še senčilnik za izračunavanje (compute shader), ki pa ni podprt. Senčilniki se združujejo v programe, ki tvorijo programabilen del cevovoda za izris.}
+
+OpenGL senčilniki se pišejo v jeziku GLSL (angl. OpenGL Shading Language). GLSL je osnovan na jeziku C in omogoča prenosljivost med operacijskimi sistemi in različnimi proizvajalci strojne opreme. \textcolor{orange}{Citation needed}
+
+\textcolor{red}{Need more text.}
+
+\textcolor{red}{}
 \subsection*{Teksture}
 
 Teksture v OpenGL so objekti, ki vsebujejo eno ali več slik, ter so uporabni kot vir slikovnih podatkov v senčilnikih ali kot tarča za izris v medpomnilnikih za okvirje. Ker je inicializacija teksture v OpenGL precej kompleksna, ovojnica poskrbi za inicializacijo osnovnih parametrov.
