@@ -436,21 +436,39 @@ Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnic
 
 \subsection*{Medpomnilniki}
 
-Prenašanje podatkov na grafično enoto in z nje v OpenGL poteka prek medpomnilnikov \textcolor{orange}{Povej kateri vsi medpomnilniki obstajajo in za kaj se uporabljajo}. Ovojnica podpira medpomnilnike za sezname, ki se uporabljajo za prenašanje podatkov kot so položaji oglišč, normale v ogliščih in teksturne koordinate, medpomnilnike za elemente, ki grafični enoti povedo iz katerih oglišč so sestavljene ploskve, ter medpomnilnike za okvirje (angl. frame), ki hranijo slike za izris. \textcolor{orange}{To raje razdelaj po točkah, kjer za vsako točko opišeš kaj posamezna vrsta medpomnilnikov hrani.}
+Prenašanje podatkov na grafično enoto in z nje v OpenGL poteka prek medpomnilnikov \textcolor{orange}{Povej kateri vsi medpomnilniki obstajajo in za kaj se uporabljajo}. \textcolor{red}{Uporabil sem naslednje OpenGL pomnilnike:}
+\begin{itemize}
+\item \textcolor{red}{Medpomnilnik za sezname}
+
+\textcolor{red}{Medpomnilnik za sezname hrani podatke potrebne za izris kot so položaji oglišč, pravokotnice v ogliščih, teksturne koordinate in tudi poljubne podatke, ki jih definira uporabnik.}
+\item \textcolor{red}{Medpomnilnik za seznam elementov}
+
+\textcolor{red}{Medpomnilnik za seznam elementov grafični enoti pove kako se sestavljajo osnovni liki.}
+
+\item \textcolor{red}{Medpomnilnik za okvirje}
+
+\textcolor{red}{Medpomnilnik za okvirje je drugačen tip medpomnilnika, saj sam po sebi ne hrani podatkov, vendar določa kam se bodo zapisali podatki iz cevovoda za izris.}
+
+\end{itemize}
+\textcolor{red}{Podprti pa so še naslednji tipi medpomnilnikov, ki pa so zunaj obsega moje diplomske: za kopiranje, za pakiranje pikslov, za poizvedbe, za teksture, za povratno informacijo o transformacijah, za enotne spremenljivke, za posreden izris, za atomarne števce, za posredno odpremo ukazov in za hranjenje senčilnikov.}
+
+
+Ovojnica podpira medpomnilnike za sezname, ki se uporabljajo za prenašanje podatkov kot so položaji oglišč, normale v ogliščih in teksturne koordinate, medpomnilnike za elemente, ki grafični enoti povedo iz katerih oglišč so sestavljene ploskve, ter medpomnilnike za okvirje (angl. frame), ki hranijo slike za izris. \textcolor{orange}{To raje razdelaj po točkah, kjer za vsako točko opišeš kaj posamezna vrsta medpomnilnikov hrani.}
 
 \subsection*{Senčilniki}
 
 \textcolor{orange}{V katerem jeziku se pišejo. Dobro bi bilo omeniti, da senčilniki nadomestijo del fiksnega cevovoda in katerega.}
 
-\textcolor{red}{Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejših verzijah se je uporabljal fiksen cevovod za izris, v novejših verzijah pa so nekateri deli programabilni. Slika \ref{filerenderingpipeline} prikazuje potek cevovoda od podatkov do slike.}
+\textcolor{red}{Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejših verzijah se je uporabljal fiksen cevovod za izris, v novejših verzijah pa so nekateri deli programabilni. OpenGL cevovod je sestavljen iz nasledjih faz, prikazanih v sliki \ref{filerenderingpipeline}:}
 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=12cm, height=10cm, keepaspectratio=true]{File_RenderingPipeline.png}
 \end{center}
-\caption{Skica cevovoda za izris. Rumeni pravokotniki so fiksni, modri pa so v novejših različicah programabilni.}
+\caption{Skica cevovoda za izris. Rumeni pravokotniki so fiksni deli, modri pa so v novejših različicah programabilni.}
 \label{filerenderingpipeline}
 \end{figure}
+
 
 \begin{itemize}
 \item Specifikacija oglišč
@@ -491,16 +509,37 @@ Tu se, če uporabnik tako nastavi, določi kateri delci, izmed tistih na istem p
 \end{itemize}
 \textcolor{orange}{https://www.opengl.org/wiki/Rendering\_Pipeline\_Overview}
 
+\textcolor{red}{Poleg teh senčilnikov OpenGL podpira še senčilnike za izračun, ki pa se ne izvajajo v cevovodu in so namenjeni izračunu poljubnih podatkov.}
+
 \textcolor{red}{Ovojnica podpira pet vrst senčilnikov, in sicer senčilnike za oglišča (angl. vertex shader), za geometrijo (geometry), za drobce (fragment) in za deljenje (tesselation), obstaja pa še senčilnik za izračunavanje (compute shader), ki pa ni podprt. Senčilniki se združujejo v programe, ki tvorijo programabilen del cevovoda za izris.}
 
 OpenGL senčilniki se pišejo v jeziku GLSL (angl. OpenGL Shading Language). GLSL je osnovan na jeziku C in omogoča prenosljivost med operacijskimi sistemi in različnimi proizvajalci strojne opreme. \textcolor{orange}{Citation needed}
 
-\textcolor{red}{Need more text.}
-
-\textcolor{red}{}
 \subsection*{Teksture}
 
 Teksture v OpenGL so objekti, ki vsebujejo eno ali več slik, ter so uporabni kot vir slikovnih podatkov v senčilnikih ali kot tarča za izris v medpomnilnikih za okvirje. Ker je inicializacija teksture v OpenGL precej kompleksna, ovojnica poskrbi za inicializacijo osnovnih parametrov.
+
+\textcolor{red}{OpenGL podpira naslednje tipe tekstur:}
+
+\begin{itemize}
+\item 1D, 2D in 3D teksture
+
+\textcolor{red}{Teksture, kjer so slike shranjene v 1, 2 ali 3 dimenzionalnih seznamih.}
+\item Pravokotna tekstura
+
+\textcolor{red}{Teksture, ki so nujno dvodimenzionalne in imajo drugačne metode za dostop do podatkov.}
+\item Kockasta tekstura
+
+\textcolor{red}{Teksture, sestavljene iz šestih enako velikih kvadratnih tekstur.}
+\item Večvzorčna tekstura
+
+\textcolor{red}{Teksture, ki za izračun vsakega piksla izračunajo več vzorcev, kar omogoča lepši izris.}
+\item Seznam tekstur
+
+\textcolor{red}{Teksture, ki vsebujejo sezname slik. Podprte so 1D, 2D, kockaste in večvzorčne teksture.}
+\end{itemize}
+
+\textcolor{red}{Ovojnica podpira le 2D teksture, ostale pa v aplikaciji niso uporabljene.}
 
 \subsection*{Točkovni nizi}
 
