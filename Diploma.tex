@@ -370,9 +370,8 @@ Različica podpira samo del standarda, in sicer zapis za položaje vozlišč ter
 
 \section{Aplikacija za vizualizacijo}
 
-Aplikacija je namenjena prikazovanju ožilja pacienta. Model se da poljubno obračati in premikati, lahko pa se ga tudi ogleduje v stereo prikazu. Modeli žil so prebrani iz datotek tipa Obj. 
+Aplikacija Neck Veins je namenjena prikazovanju žil tilnika pacienta. Model se da poljubno obračati in premikati, lahko pa se ga tudi ogleduje v stereo prikazu. Modeli žil so prebrani iz datotek tipa Obj, nato pa se model centrira in orikaže na zaslonu. Slika \ref{aplikacija} prikazuje glavni pogled aplikacije.
 
-\textcolor{orange}{Tukaj pride še o Neck\_Veinsih nekoliko podrobneje, prav tako lahko kto vire navedeš tako dosedanja diplomska dela kot tudi članke, ki smo jih s tega področja objavili. Članke najdeš na moji COBISS strani.}
 \begin{figure}
 \begin{center}
 \includegraphics[width=14cm]{Aplikacija.png}
@@ -386,11 +385,10 @@ Za strojno pospešen izris 3D grafike obstaja več aplikacijskih programerskih v
 
 V diplomski nalogi sem uporabil odprtokodno knjižnico LWJGL (angl. lightweight java game library), ki omogoča uporabo vmesnika OpenGL.
 
-\textcolor{red}{OpenGL doda višjenivojsko abstrakcijo grafične procesne enote. Obstaja več različnih tipov grafičnih procesnih enot z različnimi zmogljivostmi, ki pa jih zaradi abstrakcije lahko programiramo z enotnim programskim vmesnikom. }
-\textcolor{red}{}
+OpenGL doda višjenivojsko abstrakcijo grafične procesne enote. Obstaja več različnih tipov grafičnih procesnih enot z različnimi zmogljivostmi, ki pa jih zaradi abstrakcije lahko programiramo z enotnim programskim vmesnikom. 
 \section{Projekcija teksture na 3D model}
 
-Projekcija teksture na objekt deluje v treh korakih. Najprej je potrebno izrisati globinsko sliko iz pogleda projektorja \textcolor{orange}{[Kaj je projektor - to razloži]}, nato ugotoviti kaj na modelu dejansko zadanejo žarki projektorja, potem pa še pravilno pobarvati dele, ki jih žarki zadanejo.
+Projekcija teksture na objekt deluje v treh korakih. Najprej je potrebno izrisati globinsko sliko iz pogleda projektorja oziroma luči, nato ugotoviti kaj na modelu dejansko zadanejo žarki projektorja, potem pa še pravilno pobarvati dele, ki jih žarki zadanejo.
 \subsection*{Globinska slika}
 Luč se v računalniški grafiki obnaša enako kot kamera. Objekte se, tako kot pri kameri, projicira v pogled luči, nato pa se objekte izriše, pri tem pa se beleži le razdalja do luči oziroma globina najbližjih objektov v vsaki točki. Slika \ref{globinskaslika} je primer izrisa globinske slike.
 
@@ -412,7 +410,6 @@ Za izris objekta s sencami, se objekt najprej projicira v pogled kamere in pogle
 \caption{Primer osenčenega modela. Luč je na desni strani pred modelom.}
 \label{osencenmodel}
 \end{figure}
-\textcolor{orange}{Dobro bi bilo dodati lokacijo luči, da se bolje razumejo stvari. Deli geometrije, ki jih luč ne obsije so črni.}
 
 \subsection*{Izris objekta s projicirano sliko}
 Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta delec nahaja, nato pa namesto bele svetlobe vzeti barvo svetlobe, ki je na tem mestu v sliki. Slika \ref{teksturaprojecirananamodel} je primer izrisa s projecirano sliko, kjer je projecirana slika vijolično-siva šahovnica.
@@ -425,15 +422,13 @@ Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta 
 \label{teksturaprojecirananamodel}
 \end{figure}
 
-\textcolor{orange}{Tukaj dodaj še opis podatkov, ki jih bomo uporabljali. Predstaviš da so podatki v OBJ pretvorjeni iz volumetričnih zajetih podatkov kot tudi kakšen je format v katerem so x-ray slike.}
-
 \section{Nabor podatkov}
-3D posnetki so volumetrični posnetki ožilja možganov, narejeni z magnetno resonanco, ki so nato s pomočjo funkcionalnosti že obstoječe aplikacije pretvorjeni v mrežni model, 2D posnetki pa so rentgenski posnetki ožilja shranjeni kot slikovna datoteka tipa jpeg \cite{jpeg}.
-\textcolor{orange}{Needs refactoring.}
+3D posnetki so volumetrični posnetki ožilja možganov, narejeni z magnetno resonanco, ki so nato s pomočjo funkcionalnosti že obstoječe aplikacije pretvorjeni v mrežni model, 2D posnetki pa so rentgenski posnetki ožilja shranjeni kot slikovna datoteka tipa jpeg\cite{jpeg}. Volumetrični podatki so shranjeni v datotekah tipa Mhd\cite{mhd}.
+
 \chapter{Implementacija}
 \section{Programska ovojnica za LWJGL}
 
-Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnici LWJGL. OpenGL zahteva veliko knjigovodstva \textcolor{orange}{Ni ravno ustrezen izraz. To opiši.}, saj je potrebno vsa sredstva, kot so medpomnilniki, senčilniki, teksture in več, ročno uničiti, da se pomnilnik na grafični enoti ne zasiči. Ovojnica to poenostavi tako, da OpenGL sredstva zavije v smiselno poimenovane razrede. Ovojnica nudi tudi transformacije med kvaternioni in evklidskimi koti in razrede za transformacije in kamere.
+Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnici LWJGL. OpenGL zahteva veliko vodenja podatkov o stanju, saj je potrebno vsa sredstva, kot so medpomnilniki, senčilniki, teksture in več, ročno uničiti, da se pomnilnik na grafični enoti ne zasiči. Ovojnica to poenostavi tako, da OpenGL sredstva zavije v smiselno poimenovane razrede. Ovojnica nudi tudi transformacije med kvaternioni in evklidskimi koti in razrede za transformacije in kamere.
 
 \begin{figure}[h!]
 \begin{center}
@@ -446,24 +441,26 @@ Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnic
 
 \subsection*{Medpomnilniki}
 
-Prenašanje podatkov na grafično enoto in z nje v OpenGL poteka prek medpomnilnikov \textcolor{orange}{Povej kateri vsi medpomnilniki obstajajo in za kaj se uporabljajo}. \textcolor{red}{Uporabil sem naslednje OpenGL medpomnilnike:}
+Prenašanje podatkov na grafično enoto in z nje v OpenGL poteka prek medpomnilnikov. 
+
+Uporabil sem naslednje OpenGL medpomnilnike:
 \begin{description}
 
-\item[Medpomnilnik za sezname] hrani podatke potrebne za izris kot so položaji oglišč, pravokotnice v ogliščih, teksturne koordinate in tudi poljubne podatke, ki jih definira uporabnik.
+\item [Medpomnilnik za sezname] hrani podatke potrebne za izris kot so položaji oglišč, pravokotnice v ogliščih, teksturne koordinate in tudi poljubne podatke, ki jih definira uporabnik.
 
 \item [Medpomnilnik za seznam elementov] grafični enoti pove kako se sestavljajo osnovni liki.
 
 \item [Medpomnilnik za okvirje] je drugačen tip medpomnilnika, saj sam po sebi ne hrani podatkov, vendar določa kam se bodo zapisali podatki iz cevovoda za izris.
 
 \end{description}
-\textcolor{red}{Podprti pa so še naslednji tipi medpomnilnikov, ki pa so zunaj obsega predstavljenega dela: za kopiranje, za pakiranje pikslov, za poizvedbe, za teksture, za povratno informacijo o transformacijah, za enotne spremenljivke, za posreden izris, za atomarne števce, za posredno odpremo ukazov in za hranjenje senčilnikov.}
+Podprti pa so še naslednji tipi medpomnilnikov, ki pa so zunaj obsega predstavljenega dela: za kopiranje, za pakiranje pikslov, za poizvedbe, za teksture, za povratno informacijo o transformacijah, za enotne spremenljivke, za posreden izris, za atomarne števce, za posredno odpremo ukazov in za hranjenje senčilnikov.
 
 
 Ovojnica podpira medpomnilnike za sezname, ki se uporabljajo za prenašanje podatkov kot so položaji oglišč, normale v ogliščih in teksturne koordinate, medpomnilnike za elemente, ki grafični enoti povedo iz katerih oglišč so sestavljene ploskve, ter medpomnilnike za okvirje (angl. frame), ki hranijo slike za izris.
 
 \subsection*{Senčilniki}
 
-\textcolor{red}{Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejših različicah se je uporabljal fiksni cevovod za izris, v novejših verzijah pa so nekateri deli programabilni. OpenGL cevovod je sestavljen iz nasledjih faz, prikazanih v sliki \ref{filerenderingpipeline}:}
+Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejših različicah se je uporabljal fiksni cevovod za izris, v novejših verzijah pa so nekateri deli programabilni. OpenGL cevovod je sestavljen iz nasledjih faz, prikazanih v sliki \ref{filerenderingpipeline}:
 
 \begin{figure}[h]
 \begin{center}
@@ -476,22 +473,22 @@ Ovojnica podpira medpomnilnike za sezname, ki se uporabljajo za prenašanje poda
 
 
 \begin{description}
-\item [Specifikacija oglišč] \textcolor{red}{je faza cevovoda, v kateri uporabnik poda seznam oglišč in kako se združujejo v osnovne like kot so točke, črte, trikotniki in seznami trikotnikov.}
-\item [Senčilnik za oglišča] \textcolor{red}{ so uporabniški podprogrami, ki izvajajo poljubne operacije nad posameznimi oglišči. Uporabnik lahko določa izhodne spremenljivke, vendar pa mora med njimi nujno biti položaj. Ta faza cevovoda je obvezna.}
-\item [Senčilnik za deljenje ploskev] \textcolor{red}{je neobvezen del cevovoda. Uporabnik definira dva senčilnika, senčilnik za nadzor deljenja in senčilnik za izračun deljenja. Prvi lahko deluje samostojno, drugi pa nujno potrebuje še prvega. V senčilniku za nadzor se izračuna kako podrobno se bodo liki delili, v senčilniku za izračun pa se izračunajo novi liki.}
+\item [Specifikacija oglišč] je faza cevovoda, v kateri uporabnik poda seznam oglišč in kako se združujejo v osnovne like kot so točke, črte, trikotniki in seznami trikotnikov.
+\item [Senčilnik za oglišča] so uporabniški podprogrami, ki izvajajo poljubne operacije nad posameznimi oglišči. Uporabnik lahko določa izhodne spremenljivke, vendar pa mora med njimi nujno biti položaj. Ta faza cevovoda je obvezna.
+\item [Senčilnik za deljenje ploskev] je neobvezen del cevovoda. Uporabnik definira dva senčilnika, senčilnik za nadzor deljenja in senčilnik za izračun deljenja. Prvi lahko deluje samostojno, drugi pa nujno potrebuje še prvega. V senčilniku za nadzor se izračuna kako podrobno se bodo liki delili, v senčilniku za izračun pa se izračunajo novi liki.
 
-\item [Senčilnik za geometrijo] \textcolor{red}{ so prav tako neobvezni, definira pa jih uporabnik. Kot vhodne podatke dobijo osnovne like, ki pa jih lahko zavržejo, spremenijo in delijo.}
+\item [Senčilnik za geometrijo] so prav tako neobvezni, definira pa jih uporabnik. Kot vhodne podatke dobijo osnovne like, ki pa jih lahko zavržejo, spremenijo in delijo.
 
-\item [Naknadna obdelava oglišč] \textcolor{red}{ je faza, v kateri se liki iz prejšnjih faz zavržejo, če ne spadajo v pogled kamere, oziramo razrežejo, če so delno v pogledu kamere. Po želji se lahko podatki tu shranijo v medpomnilnik, da jih ni potrebno ponovno računati, če se ne bodo spreminjali.}
-\item [Sestavljanje osnovnih likov] \textcolor{red}{ je faza, v kateri se podatki iz prejšnjih faz pretvorijo v osnovne like, ki smo jih hoteli izrisati. Naprimer, če so vhodni podatki trikotniki, želimo pa le izris črt, se bo tu vsak trikotnik razdelil v tri črte. Tu se lahko cevovod konča, če želimo le izračunati podatke za pozneje, ne pa jih tudi izrisati. }
-\item [Rasterizacija]\textcolor{red}{ je faza, kjer se osnovni liki razdelijo v diskretne delce, ki služijo izračunu končne barve piksla.}
-\item [Senčilnik za drobce]\textcolor{red}{ izračuna barvo piksla in njegovo globina. Ta del cevovoda je neobvezen, vendar se, če ga ni, izračuna le globina delca.}
-\item [Procesiranje drobcev]\textcolor{red}{ je faza kjer se, če uporabnik tako nastavi, določi kateri delci, izmed tistih na istem položaju, se bodo obdržali glede na globino, šablono in druge lastnosti. Na koncu se barve prosojnih delcev zmešajo, nato pa se rezultat zapiše na zaslon ali v medpomnilnik za okvirje.}
+\item [Naknadna obdelava oglišč] je faza, v kateri se liki iz prejšnjih faz zavržejo, če ne spadajo v pogled kamere, oziramo razrežejo, če so delno v pogledu kamere. Po želji se lahko podatki tu shranijo v medpomnilnik, da jih ni potrebno ponovno računati, če se ne bodo spreminjali.
+\item [Sestavljanje osnovnih likov] je faza, v kateri se podatki iz prejšnjih faz pretvorijo v osnovne like, ki smo jih hoteli izrisati. Naprimer, če so vhodni podatki trikotniki, želimo pa le izris črt, se bo tu vsak trikotnik razdelil v tri črte. Tu se lahko cevovod konča, če želimo le izračunati podatke za pozneje, ne pa jih tudi izrisati. 
+\item [Rasterizacija] je faza, kjer se osnovni liki razdelijo v diskretne delce, ki služijo izračunu končne barve piksla.
+\item [Senčilnik za drobce]izračuna barvo piksla in njegovo globina. Ta del cevovoda je neobvezen, vendar se, če ga ni, izračuna le globina delca.
+\item [Procesiranje drobcev] je faza kjer se, če uporabnik tako nastavi, določi kateri delci, izmed tistih na istem položaju, se bodo obdržali glede na globino, šablono in druge lastnosti. Na koncu se barve prosojnih delcev zmešajo, nato pa se rezultat zapiše na zaslon ali v medpomnilnik za okvirje.
 \end{description}
 
-\textcolor{red}{Poleg teh senčilnikov OpenGL podpira še senčilnike za izračun, ki pa se ne izvajajo v cevovodu in so namenjeni izračunu poljubnih podatkov.}
+Poleg teh senčilnikov OpenGL podpira še senčilnike za izračun, ki pa se ne izvajajo v cevovodu in so namenjeni izračunu poljubnih podatkov.
 
-\textcolor{red}{Ovojnica podpira pet vrst senčilnikov, in sicer senčilnike za oglišča (angl. vertex shader), za geometrijo (angl. geometry), za drobce (angl. fragment) in za deljenje (angl. tesselation), obstaja pa še senčilnik za izračunavanje (angl. compute shader), ki pa ni podprt. Senčilniki se združujejo v programe, ki tvorijo programabilen del cevovoda za izris.}
+Ovojnica podpira pet vrst senčilnikov, in sicer senčilnike za oglišča (angl. vertex shader), za geometrijo (angl. geometry), za drobce (angl. fragment) in za deljenje (angl. tesselation), obstaja pa še senčilnik za izračunavanje (angl. compute shader), ki pa ni podprt. Senčilniki se združujejo v programe, ki tvorijo programabilen del cevovoda za izris.
 
 OpenGL senčilniki se pišejo v jeziku GLSL\cite{GLSL} (angl. OpenGL Shading Language). GLSL je osnovan na jeziku C in omogoča prenosljivost med operacijskimi sistemi in različnimi proizvajalci strojne opreme.
 
@@ -516,8 +513,6 @@ Ovojnica podpira le 2D teksture, ostale pa v aplikaciji niso uporabljene.
 Točkovni nizi (angl. vertex array object) so OpenGL objekti, ki hranijo stanje potrebno za izris objektov. Hranijo le stanje, ne pa tudi samih podatkov, to je reference na medpomnilnike in obliko podatkov v teh medpomnilnikih, ne pa tudi samih podatkov iz medpomnilnikov. Prednost se kaže v hitrosti in velikosti kode, saj je potrebno veliko manj sprememb stanja.
 
 \subsection*{Transformacija}
-
-\textcolor{orange}{Mogoče bi bilo smiselno kaj več o samih transformacijah napisati v predhodnjem poglavju.}
 
 Transformacija (angl. transform) je razred, ki je namenjen hranjenju transformacije objekta, to je rotacija, položaj in velikost. Položaj in velikost sta predstavljena kot vektorja dolžine 3, rotacija pa kot kvaternion. Podprte so rotacije in premiki v lokalnem ter globalnem koordinatnem sistemu, ter rotacije v poljubnem sistemu. Razred vsebuje tudi funkcije za pretvorbo iz kvaternionov v eulerjeve kote, za izračun transformacijske matrike iz stanja transformacije, ter za izračun kvaterniona iz rotacijske matrike.
 
@@ -567,12 +562,10 @@ Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami 
 \subsection*{Nalaganje datotek}
 Funkcionalnost za nalaganje datotek je obstajala že v osnovni aplikaciji. Uporabnik s pritiskom na gumb \emph{'odpri'} dobi pojavno okno, v katerem izbira datoteke. Podprti formati so bili mhd za volumetrične datoteke, ter Obj za mrežne modele. Moral sem dodati še možnost za nalaganje slikovnih datotek v standardnih formatih jpeg in png \cite{png}. Java podpira ta dva formata v svoji standardni knjižnici, tako da je bila implementacija preprosta.
 
-\textcolor{orange}{Manjka ti še predstavitev osnovne aplikacije in predstavitev modulov, ki si jih adaptiral, uporabljal pri svojem delu.}
-
-
 \chapter{Zaključek}
 \textcolor{red}{V diplomskem delu sem implementiral projekcijo 2D rentgenske slike na 3D mrežni model. Vhodni podatki so mrežni modeli v datotekah tipa Obj in rentgenske slike tipa obj. Mrežni modeli so bili pretvorjeni iz MHD datotek v mrežne modele v okviru že obstoječe aplikacije Neck veins.
 }
+
 \textcolor{red}{Implementacija je bila napisana v programskem jeziku Java, kar je omogočilo brezhibno integracijo v že obstoječo aplikacijo. Za lažji in hitrejši razvoj sem razvil še programsko ovojnico za LWJGL, ki hrani stanje OpenGL objektov in ima bolj berljivo poimenovane funkcije.}
 
 \textcolor{red}{V okviru nadaljnjega dela bi lahko implementiral algoritem za avtomatsko poravnavo 2D in 3D posnetkov\cite{6507588}, razvit na FRIju.}
