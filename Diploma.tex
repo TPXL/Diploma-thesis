@@ -333,11 +333,18 @@ This sample document presents an approach to typesetting your BSc thesis using \
 
 \chapter{Metode in orodja}
 \section{Java in Eclipse}
-Za razvoj programskega dela diplomske naloge sem uporabil programski jezik Java\cite{Java} in razvojno okolje Eclipse\cite{Eclipse}, saj sem z obema že seznanjen.
+Za razvoj programskega dela diplomske naloge sem uporabil programski jezik Java\cite{Java} in razvojno okolje Eclipse\cite{Eclipse}, saj sem se z obema že seznanil pri prejšnjih projektih na fakulteti, tako da je bil razvoj veliko lažji.
 \subsection*{Java}
-Java je objektno orientiran programski jezik, ki ga je razvilo podjetje Sun Microsystems leta 1995. Osnovan je na jezikoma C in C++, vendar pa je višjenivojski, saj pred uporabnikom skrije različne konstrukte, kot so naprimer kazalci in upravljanje s pomnilnikom. Prevede se v nižjenivojski jezik, ki ga nato tolmači javanski navidezni stroj (angl. Java virtual machine - JVM). To omogoča princip \emph{'napiši enkrat, izvajaj kjerkoli'}, kar je bil eden izmed ciljev razvoja tega programskega jezika.
+Java je objektno orientiran programski jezik, ki ga je razvilo podjetje Sun Microsystems leta 1995. Osnovan je na jezikoma C in C++, vendar pa je počasnejši. Prevede se v nižjenivojsko bajtno kodo, ki pa jo nato tolmači javanski navidezni stroj (angl. Java virtual machine - JVM). Ta vmesna stopnja med procesorjem in bajtno kodo omogoča princip\emph{'napiši enkrat, izvajaj kjerkoli'}, kar je bil eden izmed glavnih ciljev razvoja tega programskega jezika. Pred uporabnikom skrije nekatere programske konstrukte, kot so kazalci in upravljanje s pomnilnikom, kar pomeni da je višjenivojski jezik. 
+
+Java je trenutno eden najpopularnejših jezikov\cite{javapopularity}, h čemur verjetno pripomore lahek razvoj in pa vseprisotnost tehnologij, ki jo uporabljajo, kot naprimer operacijski sistem Android in pa mnoge strežniške arhitekture. Poleg računalnikov je Java namenjena še vgrajenim sistemom z Java Micro Edition ter razvoju aplikacije za podjetja z Java Enterprise Edition.
+
 \subsection*{Eclipse}
-Eclipse je odprtokodno integrirano razvojno okolje. V osnovi je namenjeno programiranju Java aplikacij, vendar obstajajo vtičniki tudi za mnoge druge jezike. Prednost uporabe Eclipsa je urejevalnik, ki omogoča samodejno dopolnjevanje izrazov in opozarja na napake, ter razhroščevalnik in prikaz dokumentacije.
+
+Eclipse je odprtokodno integrirano razvojno okolje. V osnovi je namenjeno programiranju Java aplikacij, vendar pa obstajajo vtičniki tudi za mnoge druge jezike, kot naprimer JavaScript, C, C++ in drugi. Z vtičniki je mogoče dodati tudi drugačno funkcionalnost in sicer stvari kot dodatek ObjectAid UML Explorer\cite{objectaid}, ki je bil uporabljen za izris diagrama dedovanja v sliki \ref{classdiagram}.
+
+Prednost uporabe Eclipsa je urejevalnik, ki omogoča samodejno dopolnjevanje izrazov in opozarja na napake, ter razhroščevalnik in prikaz ustrezne dokumentacije. 
+
 \section{Hranjenje mrežnega modela}
 
 Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek\cite{obj}, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3-dimenzionalnih (3D) mrežnih modelov. Standard je tekstoven, tako da so datoteke zlahka berljive, slabost tega pa je večja velikost datotek.
@@ -370,9 +377,11 @@ Različica podpira samo del standarda, in sicer zapis za položaje vozlišč ter
 
 \section{Aplikacija za vizualizacijo}
 
-Aplikacija Neck Veins je namenjena prikazovanju žil tilnika pacienta. Model se da poljubno obračati in premikati, lahko pa se ga tudi ogleduje v stereo prikazu. Modeli žil so prebrani iz datotek tipa Obj, nato pa se model centrira in orikaže na zaslonu. Slika \ref{aplikacija} prikazuje glavni pogled aplikacije.
+Aplikacija Neck Veins je namenjena prikazovanju žil tilnika pacienta. Razvila sta jo Anže Sodja\cite{sodja} in Simon Žagar\cite{zagar}. Model in pogled se da poljubno premikati in obračati. Modeli žil so prebrani iz datotek tipa Obj ali Mhd. Podatki iz Mhd datotek se najprej pretvorijo v mrežni model, z uporabo algoritma marching cubes.  Model se, ko se naloži, centrira in prikaže na zaslonu. Prikaz je možno spreminjati od čisto osnovnega izrisa do izrisa z odbleskom in do izrisa le mreže modela.
 
-\begin{figure}
+Slika \ref{aplikacija} prikazuje glavni pogled aplikacije. 
+
+\begin{figure}[h!]
 \begin{center}
 \includegraphics[width=14cm]{Aplikacija.png}
 \end{center}
@@ -489,6 +498,8 @@ Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejši
 Poleg teh senčilnikov OpenGL podpira še senčilnike za izračun, ki pa se ne izvajajo v cevovodu in so namenjeni izračunu poljubnih podatkov.
 
 Ovojnica podpira pet vrst senčilnikov, in sicer senčilnike za oglišča (angl. vertex shader), za geometrijo (angl. geometry), za drobce (angl. fragment) in za deljenje (angl. tesselation), obstaja pa še senčilnik za izračunavanje (angl. compute shader), ki pa ni podprt. Senčilniki se združujejo v programe, ki tvorijo programabilen del cevovoda za izris.
+
+\subsection*{GLSL}
 
 OpenGL senčilniki se pišejo v jeziku GLSL\cite{GLSL} (angl. OpenGL Shading Language). GLSL je osnovan na jeziku C in omogoča prenosljivost med operacijskimi sistemi in različnimi proizvajalci strojne opreme.
 
