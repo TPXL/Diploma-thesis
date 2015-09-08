@@ -399,13 +399,144 @@ OpenGL doda višjenivojsko abstrakcijo grafične procesne enote. Obstaja več ra
 
 Projekcija teksture na objekt deluje v treh korakih. Najprej je potrebno izrisati globinsko sliko iz pogleda projektorja oziroma luči, nato ugotoviti kaj na modelu dejansko zadanejo žarki projektorja, potem pa še pravilno pobarvati dele, ki jih žarki zadanejo.
 
-\subsection*{Homogene koordinate}
+\subsection*{Premik točke v prostoru}
 
+Za izris slike moramo najprej vedeti kako se točke premika, rotira in skalira. Premik je najosnovnejši, točki le prištejemo razdaljo, za katero jo želimo premakniti. 
+
+\begin{align}
+t
+=
+\begin{bmatrix}
+p_x \\
+p_y
+\end{bmatrix}
+\label{rotationmatrix}
+\end{align}
+
+Rotacija v dveh dimenzijah je dosežena z množenjem vektorja položaja z matriko \ref{rotationmatrix}.
+
+\begin{align}
+R
+=
+\begin{bmatrix}
+\cos\alpha & -\sin\alpha \\
+\sin\alpha & \cos\alpha
+\end{bmatrix}
+\label{rotationmatrix}
+\end{align}
+
+
+Skaliranje se doseže z matriko \ref{scalematrix}, ki položaj pomnoži s faktorjem skaliranja.
+
+\begin{align}
+S
+=
+\begin{bmatrix}
+s_x & 0 \\
+0 & s_y
+\end{bmatrix}
+\label{scalematrix}
+\end{align}
+
+Vse tri operacije se sestavijo v enačbo \ref{osnovnatransformacija},
+
+\begin{align}
+p'
+=
+S*R*p+t
+\label{osnovnatransformacija}
+\end{align}
+
+tu pa se pojavi problem, saj je zaradi seštevanja in množenja nemogoče sestavljanje transformacij. Želimo imeti le množenje, zato uvedemo homogene koordinate. V zapis točk dodamo še eno koordinato, ki je nastavljena na 1. Tako dobimo za zapis točke vektor \ref{homogenatocka},
+\begin{align}
+\begin{bmatrix}
+x \\ y \\ 1
+\end{bmatrix}
+\label{homogenatocka}
+\end{align}
+
+za zapis rotacije matriko \ref{homogenarotacijska} in za skaliranje matriko \ref{homogenaskalirna}.
+
+\begin{align}
+R
+=
+\begin{bmatrix}
+\cos\alpha & -\sin\alpha & 0 \\
+\sin\alpha & \cos\alpha & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+\label{homogenarotacijska}
+\end{align}
+
+\begin{align}
+S
+=
+\begin{bmatrix}
+s_x & 0 & 0 \\
+0 & s_y & 0 \\
+0 & 0 & 1 
+\end{bmatrix}
+\label{homogenaskalirna}
+\end{align}
+
+Premik v homogenih koordinatah je prav tako dosežen z matričnim množenjem z matriko \ref{homogenatranslacijska}.
+
+\begin{align}
+t
+=
+\begin{bmatrix}
+1 & 0 & d_x \\ 
+0 & 1 & d_x \\
+0 & 0 & 1
+\end{bmatrix}
+\label{homogenatranslacijska}
+\end{align}
+
+Sedaj lahko premik, rotacijo in premik združimo v eno matriko, zaradi tega, ker imamo samo množenje, pa lahko transformacije poljubno sestavljamo. Ko operacije združujemo je pomemben vrstni red operacij, saj množenje matrik ni komutativno. 
+
+V treh dimenzijah je skaliranje in premik preprost, doda se še ena koordinata, pri rotaciji pa se zaplete. Rotacije okrog osi x, y in z so predstavljene v matrikah \ref{rotx}, \ref{roty} in \ref{rotz}.
+
+\begin{align}
+R_x
+=
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & \cos\alpha & -\sin\alpha & 0 \\
+0 & \sin\alpha & \cos\alpha & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\label{rotx}
+\end{align}
+
+\begin{align}
+R_y
+=
+\begin{bmatrix}
+\cos\alpha & 0 & \sin\alpha & 0 \\
+0 & 1 & 0 & 0 \\
+-\sin\alpha & 0 & \cos\alpha & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\label{roty}
+\end{align}
+\begin{align}
+R_z
+=
+\begin{bmatrix}
+\cos\alpha & -\sin\alpha & 0 & 0 \\
+\sin\alpha & \cos\alpha & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\label{rotz}
+\end{align}
+
+Objekte s pomočjo teh treh matrik lahko poljubno premikamo v prostoru. Ti premiki objekte preslikajo iz lokalnih koordinat v globalne koordinate. Lokalni koordinatni sistem je sistem, v katerem je bil objekt ustvarjen, globalni sistem pa ima dejanske lokacije objektov.
 
 
 \subsection*{Kamera}
 
-Kamera preslika objekte iz njihovega 3D položaja na 2D položaj na zaslonu. Za preslikavo najprej iz svetovnih koordinat preslikamo v NDC, nato pa še v koordinatni sistem zaslona. NDC je koordinatni sistem, v katerem je vse kar se bo izrisalo na koordinatah, ki ga določa kvader z oglišči v [1, 1, 1] in [-1, -1, -1]. Koordinatni sistem zaslona so dejanski položaji pikslov na zaslonu, tako da je potrebno položaje preslikati na kvadrat z oglišči v [0, 0] in [širina, višina]. Za preslikvo v NDC poskrbi projekcijska matrika kamere, za preslikavo v koordinatni sistem zaslona pa potrebujemo le širino in višino zaslona.
+Kamera preslika objekte iz njihovega 3D položaja na 2D položaj na zaslonu. Za preslikavo najprej iz svetovnih koordinat preslikamo v koordinatni sistem kamere, potem v NDC, nato pa še v koordinatni sistem zaslona. Preslikava v koordinatni sistem kamere premakne svetovni sistem tako, da je kamera v središču in gleda proti pozitivni z osi. NDC je koordinatni sistem, v katerem je vse kar se bo izrisalo na koordinatah, ki ga določa kvader z oglišči v [1, 1, 1] in [-1, -1, -1]. Koordinatni sistem zaslona so dejanski položaji pikslov na zaslonu, tako da je potrebno položaje preslikati na kvadrat z oglišči v [0, 0] in [širina, višina]. Za preslikvo v NDC poskrbi projekcijska matrika kamere, za preslikavo v koordinatni sistem zaslona pa potrebujemo le širino in višino zaslona.
 
 Poznamo dve osnovni vrsti preslikav v NDC, vzporedne in perspektivne. Pri vzporednih preslikavah so projekcijski žarki vzporedni, kar pomeni da bližnji predmeti izgledajo enako veliki kot močno oddaljeni predmeti. Razdalje med točkami se tu ohranjajo, ne glede na oddaljenost od kamere. Matrika \ref{orthomatrix} predstavlja projekcijsko matriko za vzporedno kamero.
 
