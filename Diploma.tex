@@ -605,9 +605,9 @@ Preslikava v koordinate zaslona je dosežene z množenjem koordinat v NDC z matr
 
 \begin{align}
 \begin{bmatrix}
-sirina & 0 & 0 & sirina \\ 
-0 & visina & 0 & visina \\ 
-0 & 0 & 0.5 & 1 \\ 
+\frac{sirina}{2} & 0 & 0 & \frac{sirina}{2}\\ 
+0 & \frac{visina}{2} & 0 & \frac{visina}{2}\\ 
+0 & 0 & 0.5 & 0.5 \\ 
 0 & 0 & 0 & 1
 \end{bmatrix}
 \label{preslikavavzaslon}
@@ -615,9 +615,9 @@ sirina & 0 & 0 & sirina \\
 
 \begin{align}
 \begin{bmatrix}
-sirina & 0 & 0 & sirina \\ 
-0 & visina & 0 & visina \\ 
-0 & 0 & 0.5 & 1 \\ 
+\frac{sirina}{2} & 0 & 0 & \frac{sirina}{2}\\ 
+0 & \frac{visina}{2} & 0 & \frac{visina}{2}\\ 
+0 & 0 & 0.5 & 0.5 \\ 
 0 & 0 & 0 & 1
 \end{bmatrix}
 *
@@ -626,9 +626,9 @@ sirina & 0 & 0 & sirina \\
 \end{bmatrix}
 =
 \begin{bmatrix}
-[-1, 1]*sirina + sirina \\
-[-1, 1]*visina + visina \\
-\frac{[-1, 1]+1}{2} \\
+[-1, 1]*\frac{sirina}{2} + \frac{sirina}{2}\\
+[-1, 1]*\frac{visina}{2} + \frac{visina}{2}\\
+\frac{[-1, 1]}{2} + 0.5 \\
 1
 \end{bmatrix}
 =
@@ -640,6 +640,8 @@ sirina & 0 & 0 & sirina \\
 \end{bmatrix}
 \label{zaslonenacba}
 \end{align}
+
+To je vse kar potrebujemo, da projiciramo teksturo na 3D objekt.
 
 \subsection*{Globinska slika}
 Luč se v računalniški grafiki obnaša enako kot kamera. Objekte se, tako kot pri kameri, projicira v pogled luči, nato pa se objekte izriše, pri tem pa se beleži le razdalja do luči oziroma globina najbližjih objektov v vsaki točki. Slika \ref{globinskaslika} je primer izrisa globinske slike.
