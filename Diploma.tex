@@ -390,7 +390,7 @@ Slika \ref{aplikacija} prikazuje glavni pogled aplikacije.
 \end{figure}
 
 \section{Strojno pospešen izris 3D grafike}
-Za strojno pospešen izris 3D grafike obstaja več aplikacijskih programerskih vmesnikov, najbolj znana in razširjena pa sta DirectX \cite{DirectX} in OpenGL \cite{OpenGL}. DirectX je razvil Microsoft leta 1995 in je namenjen za razvoj aplikacij na operacijskem sistemu Windows, OpenGL pa je leta 1992 razvil Silicon Graphics Inc., sedaj pa ga nadzira neprofitna skupnost Khronos Group, in je namenjen strojno pospešenemu izrisu na večih platformah in v večih jezikih. 
+Za strojno pospešen izris 3D grafike obstaja več aplikacijskih programerskih vmesnikov, najbolj znana in razširjena pa sta DirectX \cite{DirectX} in OpenGL \cite{OpenGL}. DirectX je razvil Microsoft leta 1995 in je namenjen za razvoju aplikacij na operacijskem sistemu Windows. OpenGL je leta 1992 razvil Silicon Graphics Inc., sedaj pa ga nadzira neprofitna skupnost Khronos Group. Namenjen je strojno pospešenemu izrisu na večih platformah in v večih jezikih. 
 
 V diplomski nalogi sem uporabil odprtokodno knjižnico LWJGL (angl. lightweight java game library), ki omogoča uporabo vmesnika OpenGL.
 
@@ -398,6 +398,118 @@ OpenGL doda višjenivojsko abstrakcijo grafične procesne enote. Obstaja več ra
 \section{Projekcija teksture na 3D model}
 
 Projekcija teksture na objekt deluje v treh korakih. Najprej je potrebno izrisati globinsko sliko iz pogleda projektorja oziroma luči, nato ugotoviti kaj na modelu dejansko zadanejo žarki projektorja, potem pa še pravilno pobarvati dele, ki jih žarki zadanejo.
+
+\subsection*{Homogene koordinate}
+
+
+
+\subsection*{Kamera}
+
+Kamera preslika objekte iz njihovega 3D položaja na 2D položaj na zaslonu. Za preslikavo najprej iz svetovnih koordinat preslikamo v NDC, nato pa še v koordinatni sistem zaslona. NDC je koordinatni sistem, v katerem je vse kar se bo izrisalo na koordinatah, ki ga določa kvader z oglišči v [1, 1, 1] in [-1, -1, -1]. Koordinatni sistem zaslona so dejanski položaji pikslov na zaslonu, tako da je potrebno položaje preslikati na kvadrat z oglišči v [0, 0] in [širina, višina]. Za preslikvo v NDC poskrbi projekcijska matrika kamere, za preslikavo v koordinatni sistem zaslona pa potrebujemo le širino in višino zaslona.
+
+Poznamo dve osnovni vrsti preslikav v NDC, vzporedne in perspektivne. Pri vzporednih preslikavah so projekcijski žarki vzporedni, kar pomeni da bližnji predmeti izgledajo enako veliki kot močno oddaljeni predmeti. Razdalje med točkami se tu ohranjajo, ne glede na oddaljenost od kamere. Matrika \ref{orthomatrix} predstavlja projekcijsko matriko za vzporedno kamero.
+
+\begin{align}
+\begin{bmatrix}
+\frac{2}{right-left} & 0 & 0 & \frac{-(right+left)}{right-left}\\ 
+0 & \frac{2}{top-bottom} & 0 & \frac{-(top+bottom)}{top-bottom} \\ 
+0 & 0 & \frac{-2}{far-near} & \frac{far+near}{far-near} \\ 
+0 & 0 & 0 & 1
+\end{bmatrix}
+\label{orthomatrix}
+\end{align}
+
+Diagonalni elementi skalirajo točko, četrti stolpec pa točke premakne, iz česar je razvidno da se razdalje med točkami res ohranjajo, ne glede na oddaljenost od kamere.
+
+Pri perspektivnih preslikavah se žarki stikajo v eni točki, kot je naprimer človeško oko. Tu se ne ohranjajo razdalje med točkami, kar pomeni, da oddaljeni predmeti izgledajo bližje skupaj, kot dejansko so. Matrika \ref{perspectivematrix} predstavlja projekcijsko matriko za vzporedno kamero.
+
+\begin{align}
+\begin{bmatrix}
+\frac{1}{aspect*f} & 0 & 0 & 0 \\ 
+0 & \frac{1}{f} & 0 & 0 \\ 
+0 & 0 & \frac{-far+near)}{far-near} & \frac{-2*far*near}{far-near} \\ 
+0 & 0 & -1 & 0
+\end{bmatrix}
+\label{perspectivematrix}
+\end{align}
+
+Tu se točke prav tako skalirajo in premaknejo, vendar pa zaradi elementa -1 v četrti vrstici vse delimo še z oddaljenostjo od kamere, kar je pokazano v enačbah \ref{perspectivecalc} in \ref{perspectivehomogenous}. Zaradi lažje berljivosti so elementi matrike zapisani s črkami A, B, C in D, saj njihova vrednost ni pomembna, ker želimo pokazati le, da je položaj odvisen od oddaljenosti.
+
+\begin{align}
+\begin{bmatrix}
+A & 0 & 0 & 0 \\ 
+0 & B & 0 & 0 \\ 
+0 & 0 & C & D \\ 
+0 & 0 & -1 & 0
+\end{bmatrix}
+*
+\begin{bmatrix}
+x \\ y \\ z \\ 1
+\end{bmatrix}	
+=
+\begin{bmatrix}
+A*x \\
+B*y \\
+C*z+D \\
+E*z
+\end{bmatrix}
+\label{perspectivecalc}
+\end{align}
+
+Vektorji za položaj morajo biti v računalniški grafiki homogeni, kar pomeni da mora četrti element biti 1, torej delimo celotno matriko z njim.
+
+\begin{align}
+\begin{bmatrix}
+\frac{A*x}{E*z} \\ 
+\frac{B*y}{E*z} \\
+\frac{C*z+D}{E*z} \\
+1
+\end{bmatrix}
+\label{perspectivehomogenous}
+\end{align}
+
+Tu je razvidno, da je x in y položaj res odvisen od oddaljenosti od kamere.
+
+Preslikava v koordinate zaslona je dosežene z množenjem koordinat v NDC z matriko \ref{preslikavavzaslon}, kot je pokazano v enačbi \ref{zaslonenacba}.
+
+\begin{align}
+\begin{bmatrix}
+sirina & 0 & 0 & sirina \\ 
+0 & visina & 0 & visina \\ 
+0 & 0 & 0.5 & 1 \\ 
+0 & 0 & 0 & 1
+\end{bmatrix}
+\label{preslikavavzaslon}
+\end{align}
+
+\begin{align}
+\begin{bmatrix}
+sirina & 0 & 0 & sirina \\ 
+0 & visina & 0 & visina \\ 
+0 & 0 & 0.5 & 1 \\ 
+0 & 0 & 0 & 1
+\end{bmatrix}
+*
+\begin{bmatrix}
+[-1, 1] \\ [-1, 1] \\ [-1, 1] \\ 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+[-1, 1]*sirina + sirina \\
+[-1, 1]*visina + visina \\
+\frac{[-1, 1]+1}{2} \\
+1
+\end{bmatrix}
+=
+\begin{bmatrix}
+[0, sirina] \\
+[0, visina] \\
+[0, 1] \\
+1
+\end{bmatrix}
+\label{zaslonenacba}
+\end{align}
+
 \subsection*{Globinska slika}
 Luč se v računalniški grafiki obnaša enako kot kamera. Objekte se, tako kot pri kameri, projicira v pogled luči, nato pa se objekte izriše, pri tem pa se beleži le razdalja do luči oziroma globina najbližjih objektov v vsaki točki. Slika \ref{globinskaslika} je primer izrisa globinske slike.
 
