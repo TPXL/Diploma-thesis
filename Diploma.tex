@@ -34,6 +34,7 @@
 						pdfproducer={LaTeX}, pdfcreator={LaTeX}, hidelinks]{hyperref}
 
 \usepackage{listings}     
+\usepackage[official]{eurosym}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	DIPLOMA INFO
@@ -43,8 +44,8 @@
 \newcommand{\tsubject}{\ttitle}
 \newcommand{\tsubjectEn}{\ttitleEn}
 \newcommand{\tauthor}{Jure Kolenko}
-\newcommand{\tkeywords}{Muh keyword1, hue}
-\newcommand{\tkeywordsEn}{Muh keyword1, hue}
+\newcommand{\tkeywords}{OpenGL, GLSL, projekcija, poravnava}
+\newcommand{\tkeywordsEn}{OpenGL, GLSL, projection, alignment}
 
 
 
@@ -188,10 +189,8 @@
 %copyright stran
 \thispagestyle{empty}
 \vspace*{8cm}
-Fakulteta za računalništvo in informatiko podpira javno dostopnost znanstvenih, strokovnih in razvojnih rezultatov. Zato priporoča objavo dela pod katero od licenc, ki omogočajo prosto razširjanje diplomskega dela in/ali možnost nadaljne proste uporabe dela. Ena izmed možnosti je izdaja diplomskega dela pod katero od Creative Commons licenc \href{http://creativecommons.si}{http://creativecommons.si}
-
-Morebitno pripadajočo programsko kodo praviloma objavite pod, denimo, licenco 
-\emph{GNU General Public License, različica 3}. Podrobnosti licence so dostopne na spletni strani \href{http://www.gnu.org/licenses/}{http://www.gnu.org/licenses/}.
+To delo je izdano pod licenco \emph{Creative Commons Priznanje avtorstva - Nekomercialno - Deljenje pod enakimi pogoji 2.5  Slovenija} (ali  novejšso). To pomeni, da se besedilo, slike, grafi in rezultati dela lahko prosto distribuirajo, reproducirajo, uporabljajo, priobčujejo javnosti in predelujejo pod pogojem, da se jasno in vidno navede avtorja in naslov tega dela in da se v primeru spremembe, preoblikovanja ali uporabe tega dela v svojem delu distribuira predelava le za nekomercialne namene in le pod licenco, ki je enaka tej.  Podrobnosti licence so dostopne na spletni strani \url{http://creativecommons.si/}
+.
 
 \begin{center}
 \mbox{}\vfill
@@ -216,7 +215,6 @@ Fakulteta za računalništvo in informatiko izdaja naslednjo nalogo:
 
 Tematika naloge:
 \end{tabbing}
-Fiddy diddling.
 \vspace{15mm}
 
 \vspace{2cm}
@@ -248,7 +246,7 @@ Fiddy diddling.
 \end{itemize}
 
 \vspace{1cm}
-\noindent V Ljubljani, dne 24. avgusta 2015 \hfill Podpis avtorja:
+\noindent V Ljubljani, dne 9. avgusta 2015 \hfill Podpis avtorja:
 
 % prazna stran
 \clearemptydoublepage
@@ -256,7 +254,9 @@ Fiddy diddling.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % zahvala
 \thispagestyle{empty}\mbox{}\vfill\null\it%
-Thanks Obama.
+Zahvaljujem se mentorju doc. dr. Matiju Maroltu in še posebej asistentu mag. Ciril Bohaku za pomoč pri pisanju in implementaciji diplomskega dela. 
+
+Zahvaljujem se tudi Aleksandru Bobiću za moralno podporo in pomoč pri izdelavi, ter Gregorju Časarju za dovoljenje uporabe njegove kode pri delu samostojne aplikacije. Posebna zahvala gre tudi Evi L. Žnidaršič za 1\EUR{} in polovico rogljička.
 \rm\normalfont
 
 % prazna stran
@@ -266,7 +266,7 @@ Thanks Obama.
 % posvetilo
 \thispagestyle{empty}\mbox{}{\vskip0.20\textheight}\mbox{}\hfill\begin{minipage}{0.55\textwidth}%
 \normalfont\end{minipage}
-Posvetilo.
+Svojim staršem.
 % prazna stran
 \clearemptydoublepage
 
@@ -285,9 +285,14 @@ Posvetilo.
 \chapter*{Seznam uporabljenih kratic}
 
 \begin{tabular}{l|l|l}
-  %{\bf kratica} & {\bf angleško} & {\bf slovensko} \\ \hline
+  {\bf kratica} & {\bf angleško} & {\bf slovensko} \\ \hline
   % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
-  %{\bf CA} & classification accuracy & klasifikacijska točnost \\
+  {\bf NDC} & normalized device coordinates & normalizirane koordinate naprave \\
+  {\bf 3D} & three dimensional & tri dimenzionalno \\
+  {\bf 2D} & two dimensional & dvo dimenzionalno \\
+  {\bf JVM} & Java virtual machine & javanski navidezni stroj \\
+  {\bf LWJGL} & Light weight Java game library & lahka javanska knjižnica za igre \\
+  {\bf GLSL} & OpenGL shading language & OpenGL jezik za senčilnike \\
 \end{tabular}
 
 
@@ -299,7 +304,8 @@ Posvetilo.
 % povzetek
 \addcontentsline{toc}{chapter}{Povzetek}
 \chapter*{Povzetek}
-V vzorcu je predstavljen postopek priprave diplomskega dela z uporabo okolja \LaTeX. Vaš povzetek mora sicer vsebovati približno 100 besed, ta tukaj je odločno prekratek.
+Napisal sem razširitev za aplikacijo, ki prikazuje model ožilja v prostoru. Razširitev uporabniku omogoča poravnavo 2D rentgenskega posnetka s 3D mrežnim modelom. Model se pri poravnavi premika neodvisno od projekcije, ko pa je uporabnik zadovoljen pa lahko projekcijo in model zaklene, tako da se premikata skupaj. Premikanje in rotiranje je možno z miško ali s tipkovnico. Za lažje programiranje sem napisal programsko ovojnico, ki nizkonivojske koncepte OpenGL predstavi bolj razumljivo.
+
 \bigskip
 
 \noindent\textbf{Ključne besede: } \tkeywords.
@@ -311,7 +317,7 @@ V vzorcu je predstavljen postopek priprave diplomskega dela z uporabo okolja \La
 \selectlanguage{english}
 \addcontentsline{toc}{chapter}{Abstract}
 \chapter*{Abstract}
-This sample document presents an approach to typesetting your BSc thesis using \LaTeX. A proper abstract should contain around 100 words which makes this one way too short.
+I wrote an extension for an application that displays a model of a vascular system of a patient. The extension allows the user to align a 2D x-ray image with a 3D mesh. The model moves independently from the projection, but when the user is satisfied with the alignment, they can lock the projection and the model together, so they move in unison. Moving and rotating the model is possible with the mouse and keyboard. For easier development I first wrote a wrapper for OpenGL, which presents low level OpenGL concepts more understandably.
 \bigskip
 
 \noindent\textbf{Keywords:} \tkeywordsEn.
@@ -325,11 +331,11 @@ This sample document presents an approach to typesetting your BSc thesis using \
 \pagestyle{fancy}
 
 \chapter{Uvod}
-\textcolor{red}{Računalniki so že dolgo pomembni za ljudi, v zadnjih časi pa še toliko bolj, saj so vedno zmogljivejši, močnejši in cenejši. Z razvojem računalnikov se je razvila tudi tehnologija za vizualizacijo, ki močno izboljša predstavo informacij v primerjavi z golimi številkami. }
+Računalniki so že dolgo pomembni za ljudi, v zadnjem času pa še toliko bolj, saj so vedno zmogljivejši, močnejši in cenejši. Z razvojem računalnikov se je razvila tudi tehnologija za vizualizacijo, ki močno izboljša predstavo informacij v primerjavi z golimi številkami. 
 
-\textcolor{red}{V medicini imamo množico slikovnih podatkov, ki pa jih te težko vizualizirati na zaslonu oziroma papirju, ker so objekti interesa 3 dimenzionalni (od tu dalje 3D), papir pa 2 dimenzionalen (od tu dalje 2D). Tu pride v poštev vizualizacija, tako da posnetke vidimo na zaslonu, tako kot dejansko izgledajo v realnosti.}
+V medicini imamo množico slikovnih podatkov, ki pa jih je težko vizualizirati na zaslonu oziroma papirju, ker so objekti interesa tri dimenzionalni (3D), papir pa dvo dimenzionalen (2D). Tu pride v poštev vizualizacija, tako da posnetke vidimo na zaslonu, tako kot dejansko izgledajo v realnosti.
 
-\textcolor{red}{Cilj moje diplomske naloge je bil narediti orodje za poravnavo 2D in 3D medicinskih podatkov, ki bi zdravnikom pomagal razbrati kje v prostoru se nahajajo deli 2D posnetka. Uporabnik naj bi izbral mrežni model ožilja in pripadajoč rentgenski posnetek, nato pa z rotiranjem in premikanjem modela oziroma slike poskrbel, da se ujemata. V naslednjem poglavju bom opisal orodja, ki sem jih uporabil, ter kako deluje sama projekcija 2D teksture na 3D model, nato pa bom opisal še kako sem nalogo implementiral kot samostojno aplikacijo, ter jo po tem integriral v že obstoječo aplikacijo.}
+Cilj moje diplomske naloge je bil narediti orodje za poravnavo 2D in 3D medicinskih podatkov, ki bi zdravnikom pomagal razbrati kje v prostoru se nahajajo deli 2D posnetka. Uporabnik naj bi izbral mrežni model ožilja in pripadajoč rentgenski posnetek, nato pa z rotiranjem in premikanjem modela oziroma slike poskrbel, da se ujemata. V naslednjem poglavju bom opisal orodja, ki sem jih uporabil, ter kako deluje sama projekcija 2D teksture na 3D model, nato pa bom opisal še kako sem nalogo implementiral kot samostojno aplikacijo, ter jo po tem integriral v že obstoječo aplikacijo.
 
 \chapter{Metode in orodja}
 \section{Java in Eclipse}
@@ -347,10 +353,11 @@ Prednost uporabe Eclipsa je urejevalnik, ki omogoča samodejno dopolnjevanje izr
 
 \section{Hranjenje mrežnega modela}
 
-Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek \cite{obj}, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3-dimenzionalnih (3D) mrežnih modelov. Standard je tekstoven, tako da so datoteke zlahka berljive, slabost tega pa je večja velikost datotek.
+Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek \cite{obj}, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3D mrežnih modelov. Standard je tekstoven, tako da so datoteke zlahka berljive, slabost tega pa je večja velikost datotek.
 \renewcommand{\lstlistingname}{Datoteka}
 \renewcommand{\lstlistlistingname}{Seznam datotek}
-\footnotesize{
+{
+\footnotesize
 \begin{lstlisting}[captionpos=b, frame=single, caption={Primer Obj datoteke, ki predstavlja kvadrat.}, breaklines=true, firstline=1, numbers=left]
 #Komentarji so vrstice, ki se zacnejo z znakom '#'
 #Vrstice, ki se zacnejo z 'v' predstavljajo ogljisca 
@@ -377,13 +384,11 @@ Različica podpira samo del standarda, in sicer zapis za položaje vozlišč ter
 
 \section{Aplikacija za vizualizacijo}
 
-Aplikacija Neck Veins je namenjena prikazovanju žil tilnika pacienta. Razvila sta jo Anže Sodja \cite{sodja} in Simon Žagar \cite{zagar}. Model in pogled se da poljubno premikati in obračati. Modeli žil so prebrani iz datotek tipa Obj ali Mhd. Podatki iz Mhd datotek se najprej pretvorijo v mrežni model, z uporabo algoritma marching cubes.  Model se, ko se naloži, centrira in prikaže na zaslonu. Prikaz je možno spreminjati od čisto osnovnega izrisa do izrisa z odbleskom in do izrisa le mreže modela.
-
-Slika \ref{aplikacija} prikazuje glavni pogled aplikacije. 
+Aplikacija Neck Veins je namenjena prikazovanju žil tilnika pacienta. Razvila sta jo Anže Sodja \cite{sodja} in Simon Žagar \cite{zagar}. Model in pogled se da poljubno premikati in obračati. Modeli žil so prebrani iz datotek tipa Obj ali Mhd. Podatki iz Mhd datotek se najprej pretvorijo v mrežni model, z uporabo algoritma marching cubes.  Model se, ko se naloži, centrira in prikaže na zaslonu. Prikaz je možno spreminjati od čisto osnovnega izrisa do izrisa z odbleskom in do izrisa le mreže modela. Slika \ref{aplikacija} prikazuje glavni pogled aplikacije. 
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=14cm]{Aplikacija.png}
+\includegraphics[width=13.5cm]{Aplikacija.png}
 \end{center}
 \caption{Glavni prikaz aplikacije za vizualizacijo.}
 \label{aplikacija}
@@ -399,10 +404,9 @@ OpenGL doda višjenivojsko abstrakcijo grafične procesne enote. Obstaja več ra
 
 Projekcija teksture na objekt deluje v treh korakih. Najprej je potrebno izrisati globinsko sliko iz pogleda projektorja oziroma luči, nato ugotoviti kaj na modelu dejansko zadanejo žarki projektorja, potem pa še pravilno pobarvati dele, ki jih žarki zadanejo.
 
-\subsection*{Premik točke v prostoru}
+\subsubsection*{Premik točke v prostoru}
 
 Za izris slike moramo najprej vedeti kako se točke premika, rotira in skalira. Premik je najosnovnejši, točki le prištejemo razdaljo, za katero jo želimo premakniti. 
-
 \begin{align}
 t
 =
@@ -412,9 +416,7 @@ p_y
 \end{bmatrix}
 \label{rotationmatrix}
 \end{align}
-
 Rotacija v dveh dimenzijah je dosežena z množenjem vektorja položaja z matriko \ref{rotationmatrix}.
-
 \begin{align}
 R
 =
@@ -424,10 +426,7 @@ R
 \end{bmatrix}
 \label{rotationmatrix}
 \end{align}
-
-
 Skaliranje se doseže z matriko \ref{scalematrix}, ki položaj pomnoži s faktorjem skaliranja.
-
 \begin{align}
 S
 =
@@ -437,16 +436,13 @@ s_x & 0 \\
 \end{bmatrix}
 \label{scalematrix}
 \end{align}
-
 Vse tri operacije se sestavijo v enačbo \ref{osnovnatransformacija},
-
 \begin{align}
 p'
 =
 S*R*p+t
 \label{osnovnatransformacija}
 \end{align}
-
 tu pa se pojavi problem, saj je zaradi seštevanja in množenja nemogoče sestavljanje transformacij. Želimo imeti le množenje, zato uvedemo homogene koordinate. V zapis točk dodamo še eno koordinato, ki je nastavljena na 1. Tako dobimo za zapis točke vektor \ref{homogenatocka},
 \begin{align}
 \begin{bmatrix}
@@ -454,9 +450,7 @@ x \\ y \\ 1
 \end{bmatrix}
 \label{homogenatocka}
 \end{align}
-
 za zapis rotacije matriko \ref{homogenarotacijska} in za skaliranje matriko \ref{homogenaskalirna}.
-
 \begin{align}
 R
 =
@@ -467,7 +461,6 @@ R
 \end{bmatrix}
 \label{homogenarotacijska}
 \end{align}
-
 \begin{align}
 S
 =
@@ -478,9 +471,7 @@ s_x & 0 & 0 \\
 \end{bmatrix}
 \label{homogenaskalirna}
 \end{align}
-
 Premik v homogenih koordinatah je prav tako dosežen z matričnim množenjem z matriko \ref{homogenatranslacijska}.
-
 \begin{align}
 t
 =
@@ -495,7 +486,6 @@ t
 Sedaj lahko premik, rotacijo in premik združimo v eno matriko, zaradi tega, ker imamo samo množenje, pa lahko transformacije poljubno sestavljamo. Ko operacije združujemo je pomemben vrstni red operacij, saj množenje matrik ni komutativno. 
 
 V treh dimenzijah je skaliranje in premik preprost, doda se še ena koordinata, pri rotaciji pa se zaplete. Rotacije okrog osi x, y in z so predstavljene v matrikah \ref{rotx}, \ref{roty} in \ref{rotz}.
-
 \begin{align}
 R_x
 =
@@ -507,7 +497,6 @@ R_x
 \end{bmatrix}
 \label{rotx}
 \end{align}
-
 \begin{align}
 R_y
 =
@@ -530,42 +519,35 @@ R_z
 \end{bmatrix}
 \label{rotz}
 \end{align}
+S pomočjo teh treh matrik lahko objekte poljubno premikamo v prostoru. Ti premiki objekte preslikajo iz lokalnih koordinat v globalne koordinate. Lokalni koordinatni sistem je sistem, v katerem je bil objekt ustvarjen, globalni sistem pa ima dejanske lokacije objektov.
 
-Objekte s pomočjo teh treh matrik lahko poljubno premikamo v prostoru. Ti premiki objekte preslikajo iz lokalnih koordinat v globalne koordinate. Lokalni koordinatni sistem je sistem, v katerem je bil objekt ustvarjen, globalni sistem pa ima dejanske lokacije objektov.
+\subsubsection*{Kamera}
 
+Kamera preslika objekte iz njihovega 3D položaja na 2D položaj na zaslonu. Za preslikavo najprej iz svetovnih koordinat preslikamo v koordinatni sistem kamere, potem v normalizirane koordinate naprave (NDC), nato pa še v koordinatni sistem zaslona. Preslikava v koordinatni sistem kamere premakne svetovni sistem tako, da je kamera v središču in gleda proti pozitivni z osi. NDC je koordinatni sistem, v katerem je vse kar se bo izrisalo na koordinatah, ki ga določa kvader z oglišči v [1, 1, 1] in [-1, -1, -1]. Koordinatni sistem zaslona so dejanski položaji pikslov na zaslonu, tako da je potrebno položaje preslikati na kvadrat z oglišči v [0, 0] in [širina, višina]. Za preslikvo v NDC poskrbi projekcijska matrika kamere, za preslikavo v koordinatni sistem zaslona pa potrebujemo le širino in višino zaslona.
 
-\subsection*{Kamera}
-
-Kamera preslika objekte iz njihovega 3D položaja na 2D položaj na zaslonu. Za preslikavo najprej iz svetovnih koordinat preslikamo v koordinatni sistem kamere, potem v NDC, nato pa še v koordinatni sistem zaslona. Preslikava v koordinatni sistem kamere premakne svetovni sistem tako, da je kamera v središču in gleda proti pozitivni z osi. NDC je koordinatni sistem, v katerem je vse kar se bo izrisalo na koordinatah, ki ga določa kvader z oglišči v [1, 1, 1] in [-1, -1, -1]. Koordinatni sistem zaslona so dejanski položaji pikslov na zaslonu, tako da je potrebno položaje preslikati na kvadrat z oglišči v [0, 0] in [širina, višina]. Za preslikvo v NDC poskrbi projekcijska matrika kamere, za preslikavo v koordinatni sistem zaslona pa potrebujemo le širino in višino zaslona.
-
-Poznamo dve osnovni vrsti preslikav v NDC, vzporedne in perspektivne. Pri vzporednih preslikavah so projekcijski žarki vzporedni, kar pomeni da bližnji predmeti izgledajo enako veliki kot močno oddaljeni predmeti. Razdalje med točkami se tu ohranjajo, ne glede na oddaljenost od kamere. Matrika \ref{orthomatrix} predstavlja projekcijsko matriko za vzporedno kamero.
-
+Poznamo dve osnovni vrsti preslikav v NDC, vzporedne in perspektivne. Pri vzporednih preslikavah so projekcijski žarki vzporedni, kar pomeni da bližnji predmeti izgledajo enako veliki kot močno oddaljeni predmeti. Razdalje med točkami se tu ohranjajo, ne glede na oddaljenost od kamere. Matrika \ref{orthomatrix} predstavlja projekcijsko matriko za vzporedno kamero. \emph{Desno, levo, zgoraj, spodaj, dalec} in \emph{blizu} predstavljajo kvader, v katerem bodo vidni objekti.
 \begin{align}
 \begin{bmatrix}
-\frac{2}{right-left} & 0 & 0 & \frac{-(right+left)}{right-left}\\ 
-0 & \frac{2}{top-bottom} & 0 & \frac{-(top+bottom)}{top-bottom} \\ 
-0 & 0 & \frac{-2}{far-near} & \frac{far+near}{far-near} \\ 
+\frac{2}{desno-levo} & 0 & 0 & \frac{-(desno+levo)}{desno-levo}\\ 
+0 & \frac{2}{zgoraj-spodaj} & 0 & \frac{-(zgoraj+spodaj)}{zgoraj-spodaj} \\ 
+0 & 0 & \frac{-2}{dalec-blizu} & \frac{dalec+blizu}{dalec-blizu} \\ 
 0 & 0 & 0 & 1
 \end{bmatrix}
 \label{orthomatrix}
 \end{align}
-
 Diagonalni elementi skalirajo točko, četrti stolpec pa točke premakne, iz česar je razvidno da se razdalje med točkami res ohranjajo, ne glede na oddaljenost od kamere.
 
-Pri perspektivnih preslikavah se žarki stikajo v eni točki, kot je naprimer človeško oko. Tu se ne ohranjajo razdalje med točkami, kar pomeni, da oddaljeni predmeti izgledajo bližje skupaj, kot dejansko so. Matrika \ref{perspectivematrix} predstavlja projekcijsko matriko za vzporedno kamero.
-
+Pri perspektivnih preslikavah se žarki stikajo v eni točki, kot je naprimer človeško oko. Tu se ne ohranjajo razdalje med točkami, kar pomeni, da oddaljeni predmeti izgledajo bližje skupaj, kot dejansko so. Matrika \ref{perspectivematrix} predstavlja projekcijsko matriko za vzporedno kamero. \emph{Razmerje} je razmerje med širino in višino slike, \emph{f} je $\sin (\frac{kot pogleda}{2})$, \emph{dalec} in \emph{blizu} pa sta bližnja in daljna ravnina. Skupaj ti parametri sestavijo prisekano piramido, v kateri bodo vidni objekti.
 \begin{align}
 \begin{bmatrix}
-\frac{1}{aspect*f} & 0 & 0 & 0 \\ 
+\frac{1}{razmerje*f} & 0 & 0 & 0 \\ 
 0 & \frac{1}{f} & 0 & 0 \\ 
-0 & 0 & \frac{-far+near)}{far-near} & \frac{-2*far*near}{far-near} \\ 
+0 & 0 & \frac{-dalec+blizu)}{dalec-blizu} & \frac{-2*dalec*blizu}{dalec-blizu} \\ 
 0 & 0 & -1 & 0
 \end{bmatrix}
 \label{perspectivematrix}
 \end{align}
-
 Tu se točke prav tako skalirajo in premaknejo, vendar pa zaradi elementa -1 v četrti vrstici vse delimo še z oddaljenostjo od kamere, kar je pokazano v enačbah \ref{perspectivecalc} in \ref{perspectivehomogenous}. Zaradi lažje berljivosti so elementi matrike zapisani s črkami A, B, C in D, saj njihova vrednost ni pomembna, ker želimo pokazati le, da je položaj odvisen od oddaljenosti.
-
 \begin{align}
 \begin{bmatrix}
 A & 0 & 0 & 0 \\ 
@@ -586,9 +568,7 @@ E*z
 \end{bmatrix}
 \label{perspectivecalc}
 \end{align}
-
 Vektorji za položaj morajo biti v računalniški grafiki homogeni, kar pomeni da mora četrti element biti 1, torej delimo celotno matriko z njim.
-
 \begin{align}
 \begin{bmatrix}
 \frac{A*x}{E*z} \\ 
@@ -598,11 +578,9 @@ Vektorji za položaj morajo biti v računalniški grafiki homogeni, kar pomeni d
 \end{bmatrix}
 \label{perspectivehomogenous}
 \end{align}
-
 Tu je razvidno, da je x in y položaj res odvisen od oddaljenosti od kamere.
 
-Preslikava v koordinate zaslona je dosežene z množenjem koordinat v NDC z matriko \ref{preslikavavzaslon}, kot je pokazano v enačbi \ref{zaslonenacba}.
-
+Preslikava v koordinate zaslona je dosežene z množenjem koordinat v NDC z matriko \ref{preslikavavzaslon}, kot je pokazano v enačbi \ref{zaslonenacba}. \emph{Visina} in \emph{sirina} sta dimenziji zaslonske slike.
 \begin{align}
 \begin{bmatrix}
 \frac{sirina}{2} & 0 & 0 & \frac{sirina}{2}\\ 
@@ -612,7 +590,6 @@ Preslikava v koordinate zaslona je dosežene z množenjem koordinat v NDC z matr
 \end{bmatrix}
 \label{preslikavavzaslon}
 \end{align}
-
 \begin{align}
 \begin{bmatrix}
 \frac{sirina}{2} & 0 & 0 & \frac{sirina}{2}\\ 
@@ -640,37 +617,36 @@ Preslikava v koordinate zaslona je dosežene z množenjem koordinat v NDC z matr
 \end{bmatrix}
 \label{zaslonenacba}
 \end{align}
-
 To je vse kar potrebujemo, da projiciramo teksturo na 3D objekt.
 
-\subsection*{Globinska slika}
+\subsubsection*{Globinska slika}
 Luč se v računalniški grafiki obnaša enako kot kamera. Objekte se, tako kot pri kameri, projicira v pogled luči, nato pa se objekte izriše, pri tem pa se beleži le razdalja do luči oziroma globina najbližjih objektov v vsaki točki. Slika \ref{globinskaslika} je primer izrisa globinske slike.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=12cm, height=10cm, keepaspectratio=true]{Globinska_slika.png}
+\includegraphics[width=\textwidth, height=10cm, keepaspectratio=true]{Globinska_slika.png}
 \end{center}
 \caption{Primer globinske slike. Svetlejši kot je piksel, dlje od kamere je objekt.}
 \label{globinskaslika}
 \end{figure}
 
-\subsection*{Izris objekta s sencami}
+\subsubsection*{Izris objekta s sencami}
 Za izris objekta s sencami, se objekt najprej projicira v pogled kamere in pogled luči. Za vsak delec objekta v pogledu kamere se nato v globinski sliki preveri, če je ta delec viden tudi v pogledu luči. Če je delec viden, se ga osvetli z barvo luči, drugače pa je črn. Slika \ref{osencenmodel} je primer tako osenčenega modela.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=12cm, height=10cm, keepaspectratio=true]{Osencen_model.png}
+\includegraphics[width=\textwidth, height=10cm, keepaspectratio=true]{Osencen_model.png}
 \end{center}
 \caption{Primer osenčenega modela. Luč je na desni strani pred modelom.}
 \label{osencenmodel}
 \end{figure}
 
-\subsection*{Izris objekta s projicirano sliko}
+\subsubsection*{Izris objekta s projicirano sliko}
 Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta delec nahaja, nato pa namesto bele svetlobe vzeti barvo svetlobe, ki je na tem mestu v sliki. Slika \ref{teksturaprojecirananamodel} je primer izrisa s projecirano sliko, kjer je projecirana slika vijolično-siva šahovnica.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=12cm, height=10cm, keepaspectratio=true]{Tekstura_projecirana_na_model.png}
+\includegraphics[width=\textwidth, height=10cm, keepaspectratio=true]{Tekstura_projecirana_na_model.png}
 \end{center}
 \caption{Primer projekcije teksture na model.}
 \label{teksturaprojecirananamodel}
@@ -687,14 +663,14 @@ Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnic
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[width=16cm, height=20cm, keepaspectratio=true]{class_diagram.png}
+\includegraphics[width=\textwidth, height=20cm, keepaspectratio=true]{class_diagram.png}
 \end{center}
 \caption{Diagram dedovanja razredov v programski ovojnici.}
 \label{classdiagram}
 \end{figure}
 
 
-\subsection*{Medpomnilniki}
+\subsection{Medpomnilniki}
 
 Prenašanje podatkov na grafično enoto in z nje v OpenGL poteka prek medpomnilnikov. 
 
@@ -713,7 +689,7 @@ Podprti pa so še naslednji tipi medpomnilnikov, ki pa so zunaj obsega predstavl
 
 Ovojnica podpira medpomnilnike za sezname, ki se uporabljajo za prenašanje podatkov kot so položaji oglišč, normale v ogliščih in teksturne koordinate, medpomnilnike za elemente, ki grafični enoti povedo iz katerih oglišč so sestavljene ploskve, ter medpomnilnike za okvirje (angl. frame), ki hranijo slike za izris.
 
-\subsection*{Senčilniki}
+\subsection{Senčilniki}
 
 Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejših različicah se je uporabljal fiksni cevovod za izris, v novejših verzijah pa so nekateri deli programabilni. OpenGL cevovod je sestavljen iz nasledjih faz, prikazanih v sliki \ref{filerenderingpipeline}:
 
@@ -721,8 +697,8 @@ Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejši
 \begin{center}
 \includegraphics[width=12cm, height=10cm, keepaspectratio=true]{File_RenderingPipeline.png}
 \end{center}
-\protect\cite{renderingpipelineoverview}
-\caption{Skica cevovoda za izris. Rumeni pravokotniki so fiksni deli, modri pa so v novejših različicah programabilni.}
+\caption{Skica cevovoda za izris. Rumeni pravokotniki so fiksni deli, modri pa so v novejših različicah programabilni.
+\cite{renderingpipelineoverview}}
 \label{filerenderingpipeline}
 \end{figure}
 
@@ -745,11 +721,12 @@ Poleg teh senčilnikov OpenGL podpira še senčilnike za izračun, ki pa se ne i
 
 Ovojnica podpira pet vrst senčilnikov, in sicer senčilnike za oglišča (angl. vertex shader), za geometrijo (angl. geometry), za drobce (angl. fragment) in za deljenje (angl. tesselation), obstaja pa še senčilnik za izračunavanje (angl. compute shader), ki pa ni podprt. Senčilniki se združujejo v programe, ki tvorijo programabilen del cevovoda za izris.
 
-\subsection*{GLSL}
+\subsection{GLSL}
 
-GLSL (angl. openGL shading language) je programski jezik za pisanje senčilnikov v OpenGL. Osnovan je na sintaksi jezika C. Koda se prevede na grafični procesni enoti, prevajanlnik pa napiše vsak proizvajalec programske opreme, kar omogoča enako kodo na različnih tipih programske opreme. Ker se koda ne izvaja na procesni enoti, je neodvisna od operacijskega sistema.
+GLSL (angl. openGL shading language) je programski jezik za pisanje sen\-čil\-nik\-ov v OpenGL. Osnovan je na sintaksi jezika C. Koda se prevede na grafični procesni enoti, prevajanlnik pa napiše vsak proizvajalec programske opreme, kar omogoča enako kodo na različnih tipih programske opreme. Ker se koda ne izvaja na procesni enoti, je neodvisna od operacijskega sistema.
 
 V OpenGL so GLSL leta 2004 vpeljali z OpenGL različico 2.0. V diplomski nalogi sem uporabljal različico 3.3, trenutna najnovejša pa je 4.5. 
+{\footnotesize
 \begin{lstlisting}[captionpos=b, frame=single, caption={Primer preprostega senčilnika za drobce.}, breaklines=true, firstline=1, numbers=left, label={glslfile}]
 #version 330
 
@@ -764,7 +741,7 @@ void main()
 	gl_FragColor = color;
 }	
 \end{lstlisting}
-
+}
 V datoteki \ref{glslfile} je primer senčilnika za drobce, napisanega v GLSL. Senčilnik je napisan v GLSL različici 3.3. Kot vhodni parameter dobi koordinato drobca na teksturi v spremenljivki \emph{UV\_frag}. Tekstura in prosojnost sta v vseh senčilnikih enaka, saj sta definirani kot \emph{uniform}. Barva teksture se prebere iz teksture na lokaciji, vsebovani v \emph{Uv\_frag}, s funkcijo \emph{texture}. \emph{gl\_FragColor} je rezervirana GLSL spremenljivka, v katero se shrani končna barva, izračunana v senčilniku.
 \subsection*{Teksture}
 
@@ -782,23 +759,23 @@ OpenGL podpira naslednje tipe tekstur:
 
 Ovojnica podpira le 2D teksture, ostale pa v aplikaciji niso uporabljene.
 
-\subsection*{Točkovni nizi}
+\subsection{Točkovni nizi}
 
 Točkovni nizi (angl. vertex array object) so OpenGL objekti, ki hranijo stanje potrebno za izris objektov. Hranijo le stanje, ne pa tudi samih podatkov, to je reference na medpomnilnike in obliko podatkov v teh medpomnilnikih, ne pa tudi samih podatkov iz medpomnilnikov. Prednost se kaže v hitrosti in velikosti kode, saj je potrebno veliko manj sprememb stanja.
 
-\subsection*{Transformacija}
+\subsection{Transformacija}
 
 Transformacija (angl. transform) je razred, ki je namenjen hranjenju transformacije objekta, to je rotacija, položaj in velikost. Položaj in velikost sta predstavljena kot vektorja dolžine 3, rotacija pa kot kvaternion\cite{quaternion}. Podprte so rotacije in premiki v lokalnem ter globalnem koordinatnem sistemu, ter rotacije v poljubnem sistemu. Razred vsebuje tudi funkcije za pretvorbo iz kvaternionov v eulerjeve kote, za izračun transformacijske matrike iz stanja transformacije, ter za izračun kvaterniona iz rotacijske matrike.
 
-Kvaternioni z dolžino 1 se lahko uporabljajo za predstavitev rotacije. Problem z eulerjevimi koti je kardanska zapora, kar pomeni, da se dve osi poravnata in izgubimo eno prostostno stopnjo. Pri kvaternionih tega problema ni. Množenje kvaternionov predstavlja rotacijo, tu pa je pomemben vrstni red množenja, ker množenje kvaternionov ni komutativno.
+Kvaternioni dolžine 1 se lahko uporabljajo za predstavitev rotacije. Problem z eulerjevimi koti je kardanska zapora, kar pomeni, da se dve osi poravnata in izgubimo eno prostostno stopnjo. Pri kvaternionih tega problema ni. Množenje kvaternionov predstavlja rotacijo, tu pa je pomemben vrstni red množenja, ker množenje kvaternionov ni komutativno.
 
 Kot posebna transformacija se obravnava tudi kamera, le da so pri kameri premiki ravno obrnjeni, ima pa še dodatne parametre za pogled kamere. Podprti sta dve vrsti kamere: perspektivna in vzporedna.
 
 
-\subsection*{Izjeme}
+\subsection{Izjeme}
 Ovojnica podpira več vrst izjem. OpenGL sam ne ustavi izvajanja programa ob napaki, vendar pa je izris nepravilen, zato ob nekaterih operacijah ovojnica preverja, če je na grafični enoti vse v redu. Izjeme se lahko prožijo, ko se senčilnik ne prevede pravilno, ko se program ne poveže pravilno ali ko se medpomnilnik za okvirje ne inicializira pravilno.
 
-\subsection*{Ostalo}
+\subsection{Ostalo}
 
 Poleg že naštetega ovojnica vsebuje še funkcijo za razhroščevanje, ki napake, ki jih vrača OpenGL, pretvori v berljive nize ter izpiše vrstico v kateri je bila funkcija klicana, kar močno olajša iskanje napak.
 
@@ -832,19 +809,17 @@ Za konec sem funkcionalnost integriral še v aplikacijo za vizualizacijo. Poleg 
 
 \subsection*{Premikanje pogleda}
 
-Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami za premik levo, desno, naprej in nazaj ter s tipkama 'r' in 'f' za gor in dol. Obrača se s tipkami 'w', 'a', 's', 'd', 'q' in 'e' ter z miško, tako da se lev miškin gumb drži nad objektom in miško premika. Premikanje z miško je, podobno kot v že obstoječi aplikaciji, narejeno s projekcijo kazalca na navidezno kroglo okoli modela, vendar pa je zaradi drugačne vrste kamere izračun preseka drugačen. (*matematika za izračunom*) 
-
+Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami za premik levo, desno, naprej in nazaj ter s tipkama 'r' in 'f' za gor in dol. Obrača se s tipkami 'w', 'a', 's', 'd', 'q' in 'e' ter z miško, tako da se lev miškin gumb drži nad objektom in miško premika. Premikanje z miško je, podobno kot v že obstoječi aplikaciji, narejeno s projekcijo kazalca na navidezno kroglo okoli modela, vendar pa je zaradi drugačne vrste kamere izračun preseka drugačen.
 
 \subsection*{Nalaganje datotek}
 Funkcionalnost za nalaganje datotek je obstajala že v osnovni aplikaciji. Uporabnik s pritiskom na gumb \emph{'odpri'} dobi pojavno okno, v katerem izbira datoteke. Podprti formati so bili mhd za volumetrične datoteke, ter Obj za mrežne modele. Moral sem dodati še možnost za nalaganje slikovnih datotek v standardnih formatih jpeg in png \cite{png}. Java podpira ta dva formata v svoji standardni knjižnici, tako da je bila implementacija preprosta.
 
 \chapter{Zaključek}
-\textcolor{red}{V diplomskem delu sem implementiral projekcijo 2D rentgenske slike na 3D mrežni model. Vhodni podatki so mrežni modeli v datotekah tipa Obj in rentgenske slike tipa obj. Mrežni modeli so bili pretvorjeni iz MHD datotek v mrežne modele v okviru že obstoječe aplikacije Neck veins.
-}
+V diplomskem delu sem implementiral projekcijo 2D rentgenske slike na 3D mrežni model. Vhodni podatki so mrežni modeli v datotekah tipa Obj in rentgenske slike tipa obj. Mrežni modeli so bili pretvorjeni iz MHD datotek v mrežne modele v okviru že obstoječe aplikacije Neck veins.
 
-\textcolor{red}{Implementacija je bila napisana v programskem jeziku Java, kar je omogočilo brezhibno integracijo v že obstoječo aplikacijo. Za lažji in hitrejši razvoj sem razvil še programsko ovojnico za LWJGL, ki hrani stanje OpenGL objektov in ima bolj berljivo poimenovane funkcije.}
+Implementacija je bila napisana v programskem jeziku Java, kar je omogočilo brezhibno integracijo v že obstoječo aplikacijo. Za lažji in hitrejši razvoj sem razvil še programsko ovojnico za LWJGL, ki hrani stanje OpenGL objektov in ima bolj berljivo poimenovane funkcije.
 
-\textcolor{red}{V okviru nadaljnjega dela bi lahko implementiral algoritem za avtomatsko poravnavo 2D in 3D posnetkov \cite{6507588}, razvit na FRIju.}
+V okviru nadaljnjega dela bi lahko implementiral algoritem za avtomatsko poravnavo 2D in 3D posnetkov \cite{6507588}, razvit na FRIju.
 
 \bibliographystyle{plain}
 \bibliography{literature}
