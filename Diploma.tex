@@ -233,7 +233,7 @@ Tematika naloge:
 \noindent Spodaj podpisani Jure Kolenko sem avtor  diplomskega dela z naslovom:
 
 \vspace{0.5cm}
-\emph{Vizualizacija medicinskih podatkov}
+\emph{Orodje za ročno poravnavo 2D in 3D medicinskih podatkov}
 
 \vspace{1.5cm}
 \noindent S svojim podpisom zagotavljam, da:
@@ -254,9 +254,11 @@ Tematika naloge:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % zahvala
 \thispagestyle{empty}\mbox{}\vfill\null\it%
-Zahvaljujem se mentorju doc. dr. Matiju Maroltu in še posebej asistentu mag. Ciril Bohaku za pomoč pri pisanju in implementaciji diplomskega dela. 
+Zahvaljujem se mentorju doc. dr. Matiji Maroltu in še posebej as. mag. Cirilu Bohaku za pomoč pri pisanju in implementaciji diplomskega dela. 
 
-Zahvaljujem se tudi Aleksandru Bobiću za moralno podporo in pomoč pri izdelavi, ter Gregorju Časarju za dovoljenje uporabe njegove kode pri delu samostojne aplikacije. Posebna zahvala gre tudi Evi L. Žnidaršič za 1\EUR{} in polovico rogljička.
+Zahvaljujem se tudi Aleksandru Bobiću za moralno podporo in pomoč pri izdelavi, ter Gregorju Časarju za dovoljenje uporabe njegove kode pri delu samostojne aplikacije.
+
+Posebna zahvala gre tudi mojim staršem za vzpodbudo in podporo med študijem.
 \rm\normalfont
 
 % prazna stran
@@ -812,10 +814,10 @@ Za konec sem funkcionalnost integriral še v aplikacijo za vizualizacijo. Poleg 
 Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami za premik levo, desno, naprej in nazaj ter s tipkama 'r' in 'f' za gor in dol. Obrača se s tipkami 'w', 'a', 's', 'd', 'q' in 'e' ter z miško, tako da se lev miškin gumb drži nad objektom in miško premika. Premikanje z miško je, podobno kot v že obstoječi aplikaciji, narejeno s projekcijo kazalca na navidezno kroglo okoli modela, vendar pa je zaradi drugačne vrste kamere izračun preseka drugačen.
 
 \subsection*{Nalaganje datotek}
-Funkcionalnost za nalaganje datotek je obstajala že v osnovni aplikaciji. Uporabnik s pritiskom na gumb \emph{'odpri'} dobi pojavno okno, v katerem izbira datoteke. Podprti formati so bili mhd za volumetrične datoteke, ter Obj za mrežne modele. Moral sem dodati še možnost za nalaganje slikovnih datotek v standardnih formatih jpeg in png \cite{png}. Java podpira ta dva formata v svoji standardni knjižnici, tako da je bila implementacija preprosta.
+Funkcionalnost za nalaganje datotek je obstajala že v osnovni aplikaciji. Uporabnik s pritiskom na gumb \emph{'odpri'} dobi pojavno okno, v katerem izbira datoteke. Podprti formati so bili Mhd za volumetrične datoteke, ter Obj za mrežne modele. Moral sem dodati še možnost za nalaganje slikovnih datotek v standardnih formatih Jpeg in Png \cite{png}. Java podpira ta dva formata v svoji standardni knjižnici, tako da je bila implementacija preprosta.
 
 \chapter{Zaključek}
-V diplomskem delu sem implementiral projekcijo 2D rentgenske slike na 3D mrežni model. Vhodni podatki so mrežni modeli v datotekah tipa Obj in rentgenske slike tipa obj. Mrežni modeli so bili pretvorjeni iz MHD datotek v mrežne modele v okviru že obstoječe aplikacije Neck veins.
+V diplomskem delu sem implementiral projekcijo 2D rentgenske slike na 3D mrežni model. Vhodni podatki so mrežni modeli v datotekah tipa Obj in rentgenske slike tipa obj. Mrežni modeli so bili pretvorjeni iz Mhd datotek v mrežne modele v okviru že obstoječe aplikacije Neck veins.
 
 Implementacija je bila napisana v programskem jeziku Java, kar je omogočilo brezhibno integracijo v že obstoječo aplikacijo. Za lažji in hitrejši razvoj sem razvil še programsko ovojnico za LWJGL, ki hrani stanje OpenGL objektov in ima bolj berljivo poimenovane funkcije.
 
