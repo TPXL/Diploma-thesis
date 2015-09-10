@@ -33,6 +33,7 @@
 						pagebackref=false, 
 						pdfproducer={LaTeX}, pdfcreator={LaTeX}, hidelinks]{hyperref}
 
+\usepackage{url}
 \usepackage{listings}     
 \usepackage[official]{eurosym}
 
@@ -353,9 +354,10 @@ Eclipse je odprtokodno integrirano razvojno okolje. V osnovi je namenjeno progra
 
 Prednost uporabe Eclipsa je urejevalnik, ki omogoča samodejno dopolnjevanje izrazov in opozarja na napake, ter razhroščevalnik in prikaz ustrezne dokumentacije. 
 
-\section{Hranjenje mrežnega modela}
+\section{Nabor podatkov}
+3D posnetki so volumetrični posnetki ožilja možganov, narejeni z računalniško tomografijo, ki so nato s pomočjo funkcionalnosti že obstoječe aplikacije pretvorjeni v mrežni model, 2D posnetki pa so rentgenski posnetki ožilja. Model ožilja je shranjen kot mrežni model ali kot volumetrični podatki, rentgentski posnetki pa so shranjeni v datotekah tipa Jpeg\cite{jpeg}.
 
-Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek \cite{obj}, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3D mrežnih modelov. Standard je tekstoven, tako da so datoteke zlahka berljive, slabost tega pa je večja velikost datotek.
+Mrežni model je sestavljen iz trikotnikov, ki jih nato izriše grafična procesna enota. Za hranjenje mrežnega modela je uporabljena spremenjena različica standarda Obj datotek \cite{obj}, ki ga je razvilo podjetje Wavefront technologies. Standard je odprt in ima široko podporo med orodji za vizualizacijo 3D mrežnih modelov. Standard je tekstoven, tako da so datoteke zlahka berljive, slabost tega pa je večja velikost datotek.
 \renewcommand{\lstlistingname}{Datoteka}
 \renewcommand{\lstlistlistingname}{Seznam datotek}
 {
@@ -381,8 +383,11 @@ vn 0 0 1
 f 1/1/1 2/2/2 4/4/4
 f 1/1/1 4/4/4 3/3/3
 \end{lstlisting}}
-
 Različica podpira samo del standarda, in sicer zapis za položaje vozlišč ter definicijo ploskev, ne podpira pa naprimer teksturnih koordinat in normal, saj se v programu ne uporabljajo oziroma se izračunajo.
+
+Volumetrični podatki so shranjeni v datotekah tipa Mhd\cite{mhd} in v njim pripadajočih datotekah z binarnimi podatki. Datoteka Mhd je opisna datoteka, ki definira kakšni so podatki shranjeni v binarnih datotekah. Za volumetrične podatke pove naprimer število dimenzij in velikost vsake dimenzije, razdaljo med sosednjimi elementi, začetno lokacijo, ime pripadajoče binarne datoteke in druge podatke.
+
+Rentgenske slike so v datotekah tipa Jpeg, ki so namenjene shranjevanju slikovnih podatkov v stisnjeni obliki.
 
 \section{Aplikacija za vizualizacijo}
 
@@ -408,86 +413,7 @@ Projekcija teksture na objekt deluje v treh korakih. Najprej je potrebno izrisat
 
 \subsubsection*{Premik točke v prostoru}
 
-Za izris slike moramo najprej vedeti kako se točke premika, rotira in skalira. Premik je najosnovnejši, točki le prištejemo razdaljo, za katero jo želimo premakniti. 
-\begin{align}
-t
-=
-\begin{bmatrix}
-p_x \\
-p_y
-\end{bmatrix}
-\label{rotationmatrix}
-\end{align}
-Rotacija v dveh dimenzijah je dosežena z množenjem vektorja položaja z matriko \ref{rotationmatrix}.
-\begin{align}
-R
-=
-\begin{bmatrix}
-\cos\alpha & -\sin\alpha \\
-\sin\alpha & \cos\alpha
-\end{bmatrix}
-\label{rotationmatrix}
-\end{align}
-Skaliranje se doseže z matriko \ref{scalematrix}, ki položaj pomnoži s faktorjem skaliranja.
-\begin{align}
-S
-=
-\begin{bmatrix}
-s_x & 0 \\
-0 & s_y
-\end{bmatrix}
-\label{scalematrix}
-\end{align}
-Vse tri operacije se sestavijo v enačbo \ref{osnovnatransformacija},
-\begin{align}
-p'
-=
-S*R*p+t
-\label{osnovnatransformacija}
-\end{align}
-tu pa se pojavi problem, saj je zaradi seštevanja in množenja nemogoče sestavljanje transformacij. Želimo imeti le množenje, zato uvedemo homogene koordinate. V zapis točk dodamo še eno koordinato, ki je nastavljena na 1. Tako dobimo za zapis točke vektor \ref{homogenatocka},
-\begin{align}
-\begin{bmatrix}
-x \\ y \\ 1
-\end{bmatrix}
-\label{homogenatocka}
-\end{align}
-za zapis rotacije matriko \ref{homogenarotacijska} in za skaliranje matriko \ref{homogenaskalirna}.
-\begin{align}
-R
-=
-\begin{bmatrix}
-\cos\alpha & -\sin\alpha & 0 \\
-\sin\alpha & \cos\alpha & 0 \\
-0 & 0 & 1
-\end{bmatrix}
-\label{homogenarotacijska}
-\end{align}
-\begin{align}
-S
-=
-\begin{bmatrix}
-s_x & 0 & 0 \\
-0 & s_y & 0 \\
-0 & 0 & 1 
-\end{bmatrix}
-\label{homogenaskalirna}
-\end{align}
-Premik v homogenih koordinatah je prav tako dosežen z matričnim množenjem z matriko \ref{homogenatranslacijska}.
-\begin{align}
-t
-=
-\begin{bmatrix}
-1 & 0 & d_x \\ 
-0 & 1 & d_x \\
-0 & 0 & 1
-\end{bmatrix}
-\label{homogenatranslacijska}
-\end{align}
-
-Sedaj lahko premik, rotacijo in premik združimo v eno matriko, zaradi tega, ker imamo samo množenje, pa lahko transformacije poljubno sestavljamo. Ko operacije združujemo je pomemben vrstni red operacij, saj množenje matrik ni komutativno. 
-
-V treh dimenzijah je skaliranje in premik preprost, doda se še ena koordinata, pri rotaciji pa se zaplete. Rotacije okrog osi x, y in z so predstavljene v matrikah \ref{rotx}, \ref{roty} in \ref{rotz}.
+3D točka se v računalniški grafiki zapiše kot vektor dolžine 4. Zadnja koordinata je potrebna za predstavitev v homogenem sistemu, ki omogoča premik z matričnim množenjem namesto seštevanjem. Rotacije okrog osi x, y in z so dosežene z matričnim množenjem z matrikami \ref{rotx}, \ref{roty} in \ref{rotz}.
 \begin{align}
 R_x
 =
@@ -521,6 +447,32 @@ R_z
 \end{bmatrix}
 \label{rotz}
 \end{align}
+Skaliranje se doseže z matriko \ref{scalematrix},
+\begin{align}
+S
+=
+\begin{bmatrix}
+s_x & 0 & 0 & 0 \\
+0 & s_y & 0 & 0 \\
+0 & 0 & s_z & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\label{scalematrix}
+\end{align}
+premik pa z matriko \ref{translatematrix}.
+
+\begin{align}
+T
+=
+\begin{bmatrix}
+1 & 0 & 0 & p_x \\
+0 & 1 & 0 & p_y \\
+0 & 0 & 1 & p_z \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\label{translatematrix}
+\end{align}
+
 S pomočjo teh treh matrik lahko objekte poljubno premikamo v prostoru. Ti premiki objekte preslikajo iz lokalnih koordinat v globalne koordinate. Lokalni koordinatni sistem je sistem, v katerem je bil objekt ustvarjen, globalni sistem pa ima dejanske lokacije objektov.
 
 \subsubsection*{Kamera}
@@ -619,7 +571,8 @@ Preslikava v koordinate zaslona je dosežene z množenjem koordinat v NDC z matr
 \end{bmatrix}
 \label{zaslonenacba}
 \end{align}
-To je vse kar potrebujemo, da projiciramo teksturo na 3D objekt.
+
+Vzporedne preslikave se uporabljajo pri izvorih svetlobe, ki so zelo oddaljeni od objektov, saj so tam podatki že skoraj vzporedni, ali v posebnih primerih, kot je rentgensko slikanje, perspektivne pa ko želimo objekte izrisati, kot jih vidimo. 
 
 \subsubsection*{Globinska slika}
 Luč se v računalniški grafiki obnaša enako kot kamera. Objekte se, tako kot pri kameri, projicira v pogled luči, nato pa se objekte izriše, pri tem pa se beleži le razdalja do luči oziroma globina najbližjih objektov v vsaki točki. Slika \ref{globinskaslika} je primer izrisa globinske slike.
@@ -654,20 +607,17 @@ Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta 
 \label{teksturaprojecirananamodel}
 \end{figure}
 
-\section{Nabor podatkov}
-3D posnetki so volumetrični posnetki ožilja možganov, narejeni z računalniško tomografijo, ki so nato s pomočjo funkcionalnosti že obstoječe aplikacije pretvorjeni v mrežni model, 2D posnetki pa so rentgenski posnetki ožilja shranjeni kot slikovna datoteka tipa Jpeg \cite{jpeg}. Volumetrični podatki so shranjeni v datotekah tipa Mhd \cite{mhd}.
-
 
 \chapter{Implementacija}
 \section{Programska ovojnica za LWJGL}
 
-Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnici LWJGL. OpenGL zahteva veliko vodenja podatkov o stanju, saj je potrebno vsa sredstva, kot so medpomnilniki, senčilniki, teksture in več, ročno uničiti, da se pomnilnik na grafični enoti ne zasiči. Ovojnica to poenostavi tako, da OpenGL sredstva zavije v smiselno poimenovane razrede. Ovojnica nudi tudi transformacije med kvaternioni in evklidskimi koti in razrede za transformacije in kamere.
+Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnici LWJGL. OpenGL zahteva veliko vodenja podatkov o stanju, saj je potrebno vsa sredstva, kot so medpomnilniki, senčilniki, teksture in več, ročno uničiti, da se pomnilnik na grafični enoti ne zasiči. Ovojnica to poenostavi tako, da OpenGL sredstva zavije v smiselno poimenovane razrede, kar skrajša in polepša kodo. Naprimer za napolnitev medpomnilnika za sezname je potrebno zaporedje funkcij \path{glBindBuffer(tip_medpomnilnika, id_medpomnilnika)} in \path{glBufferData{tip_medpomnilnika, podatki, uporaba_medpomnilnika}}, z uporabo ovojnice pa se kliče le funkcijo \path{setData(podatki)} na objektu, ki mu želimo nastaviti podatke. Ovojnica nudi tudi transformacije med kvaternioni in evklidskimi koti in razrede za transformacije in kamere.
 
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=\textwidth, height=20cm, keepaspectratio=true]{class_diagram.png}
 \end{center}
-\caption{Diagram dedovanja razredov v programski ovojnici.}
+\caption{Diagram dedovanja razredov v programski ovojnici. Slika je bila generirana z ObjectAid UML Explorer\cite{objectaid} vtičnikom za Eclipse.}
 \label{classdiagram}
 \end{figure}
 
@@ -754,7 +704,7 @@ OpenGL podpira naslednje tipe tekstur:
 \begin{description}
 \item [1D, 2D in 3D teksture]so teksture, kjer so slike shranjene v 1, 2 ali 3 dimenzionalnih poljih.
 \item [Pravokotna teksture]so teksture, ki so nujno dvodimenzionalne in imajo drugačne metode za dostop do podatkov.
-\item [\textcolor{red}{Kockaste teksture}]so teksture, sestavljene iz šestih enako velikih kvadratnih tekstur.
+\item [Kockaste teksture]so teksture, sestavljene iz šestih enako velikih kvadratnih tekstur.
 \item [Večvzorčne teksture]so teksture, ki za izračun vsakega piksla izračunajo več vzorcev, kar omogoča lepši izris.
 \item [Seznami tekstur]so teksture, ki vsebujejo sezname slik. Podprte so 1D, 2D, kockaste in večvzorčne teksture.
 \end{description}
@@ -780,6 +730,8 @@ Ovojnica podpira več vrst izjem. OpenGL sam ne ustavi izvajanja programa ob nap
 \subsection{Ostalo}
 
 Poleg že naštetega ovojnica vsebuje še funkcijo za razhroščevanje, ki napake, ki jih vrača OpenGL, pretvori v berljive nize ter izpiše vrstico v kateri je bila funkcija klicana, kar močno olajša iskanje napak.
+
+
 
 \section{Samostojna aplikacija}
 
@@ -821,7 +773,7 @@ V diplomskem delu sem implementiral projekcijo 2D rentgenske slike na 3D mrežni
 
 Implementacija je bila napisana v programskem jeziku Java, kar je omogočilo brezhibno integracijo v že obstoječo aplikacijo. Za lažji in hitrejši razvoj sem razvil še programsko ovojnico za LWJGL, ki hrani stanje OpenGL objektov in ima bolj berljivo poimenovane funkcije.
 
-V okviru nadaljnjega dela bi lahko implementiral algoritem za avtomatsko poravnavo 2D in 3D posnetkov \cite{6507588}, razvit na FRIju.
+V okviru nadaljnjega dela bi lahko implementiral algoritem za avtomatsko poravnavo 2D in 3D posnetkov \cite{6507588}.
 
 \bibliographystyle{plain}
 \bibliography{literature}
