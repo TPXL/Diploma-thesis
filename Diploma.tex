@@ -295,6 +295,8 @@ Svojim staršem.
   {\bf JVM} & Java virtual machine & javanski navidezni stroj \\
   {\bf LWJGL} & Light weight Java game library & lahka javanska knjižnica za igre \\
   {\bf GLSL} & OpenGL shading language & OpenGL jezik za senčilnike \\
+  {\bf CT} & computer tomography & računalniška tomografija \\
+  {\bf MRI} & magnetic resonance imaging & slikanje z magnetno resonanco\\
 \end{tabular}
 
 
@@ -336,6 +338,10 @@ I wrote an extension for an application that displays a model of a vascular syst
 Računalniki so že dolgo pomembni za ljudi, v zadnjem času pa še toliko bolj, saj so vedno zmogljivejši, močnejši in cenejši. Z razvojem računalnikov se je razvila tudi tehnologija za vizualizacijo, ki močno izboljša predstavo informacij v primerjavi z golimi številkami. 
 
 V medicini imamo množico slikovnih podatkov, ki pa jih je težko vizualizirati na zaslonu oziroma papirju, ker so objekti interesa tri dimenzionalni (3D), papir pa dvo dimenzionalen (2D). Tu pride v poštev vizualizacija, tako da posnetke vidimo na zaslonu, tako kot dejansko izgledajo v realnosti.
+
+Volumetrične podatke se lahko pridobi z računalniško tomografijo (angl. computer tomography - CT), slikanjem z magnetno resonanco (angl. magnetic resonance imaging - MRI), angiografijo in drugimi metodami. Te metode proizvedejo množico 2D slik, ki se nato sestavijo v tridimenzionalno podobo, iz katere pa v osnovi ni veliko razvidno, zato jo je potrebno obdelati. Primer obdelave je poligonizacija, ki iz volumetričnih podatkov izlušči mrežni model. 
+
+Med nekaterimi operacijami si zdravniki pomagajo z rentgensko sliko v realnem času, vendar pa vidljivost ni najboljša, ker si s tako sliko težko predstavljamo globino.
 
 Cilj moje diplomske naloge je bil narediti orodje za poravnavo 2D in 3D medicinskih podatkov, ki bi zdravnikom pomagal razbrati kje v prostoru se nahajajo deli 2D posnetka. Uporabnik naj bi izbral mrežni model ožilja in pripadajoč rentgenski posnetek, nato pa z rotiranjem in premikanjem modela oziroma slike poskrbel, da se ujemata. V naslednjem poglavju bom opisal orodja, ki sem jih uporabil, ter kako deluje sama projekcija 2D teksture na 3D model, nato pa bom opisal še kako sem nalogo implementiral kot samostojno aplikacijo, ter jo po tem integriral v že obstoječo aplikacijo.
 
