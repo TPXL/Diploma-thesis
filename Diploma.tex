@@ -190,8 +190,7 @@
 %copyright stran
 \thispagestyle{empty}
 \vspace*{8cm}
-To delo je izdano pod licenco \emph{Creative Commons Priznanje avtorstva - Nekomercialno - Deljenje pod enakimi pogoji 2.5  Slovenija} (ali  novejšso). To pomeni, da se besedilo, slike, grafi in rezultati dela lahko prosto distribuirajo, reproducirajo, uporabljajo, priobčujejo javnosti in predelujejo pod pogojem, da se jasno in vidno navede avtorja in naslov tega dela in da se v primeru spremembe, preoblikovanja ali uporabe tega dela v svojem delu distribuira predelava le za nekomercialne namene in le pod licenco, ki je enaka tej.  Podrobnosti licence so dostopne na spletni strani \url{http://creativecommons.si/}
-.
+To delo je izdano pod licenco \emph{Creative Commons Priznanje avtorstva - Nekomercialno - Deljenje pod enakimi pogoji 2.5  Slovenija} (ali  novejšso). To pomeni, da se besedilo, slike, grafi in rezultati dela lahko prosto distribuirajo, reproducirajo, uporabljajo, priobčujejo javnosti in predelujejo pod pogojem, da se jasno in vidno navede avtorja in naslov tega dela in da se v primeru spremembe, preoblikovanja ali uporabe tega dela v svojem delu distribuira predelava le za nekomercialne namene in le pod licenco, ki je enaka tej.  Podrobnosti licence so dostopne na spletni strani \url{http://creativecommons.si/}.
 
 \begin{center}
 \mbox{}\vfill
@@ -597,7 +596,7 @@ Za izris objekta s sencami, se objekt najprej projicira v pogled kamere in pogle
 \end{figure}
 
 \subsubsection*{Izris objekta s projicirano sliko}
-Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta delec nahaja, nato pa namesto bele svetlobe vzeti barvo svetlobe, ki je na tem mestu v sliki. Slika \ref{teksturaprojecirananamodel} je primer izrisa s projecirano sliko, kjer je projecirana slika vijolično-siva šahovnica.
+Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta delec nahaja, nato pa namesto bele svetlobe vzeti barvo svetlobe, ki je na tem mestu v sliki. Slika \ref{teksturaprojecirananamodel} je primer izrisa s projicirano sliko, kjer je projicirana slika vijolično-siva šahovnica.
 
 \begin{figure}[h]
 \begin{center}
@@ -609,7 +608,7 @@ Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta 
 
 
 \chapter{Implementacija}
-\section{Programska ovojnica za LWJGL}
+\section{Programska ovojnica za LWJGL} \label{ovojnica}
 
 Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnici LWJGL. OpenGL zahteva veliko vodenja podatkov o stanju, saj je potrebno vsa sredstva, kot so medpomnilniki, senčilniki, teksture in več, ročno uničiti, da se pomnilnik na grafični enoti ne zasiči. Ovojnica to poenostavi tako, da OpenGL sredstva zavije v smiselno poimenovane razrede, kar skrajša in polepša kodo. Naprimer za napolnitev medpomnilnika za sezname je potrebno zaporedje funkcij \path{glBindBuffer(tip_medpomnilnika, id_medpomnilnika)} in \path{glBufferData{tip_medpomnilnika, podatki, uporaba_medpomnilnika}}, z uporabo ovojnice pa se kliče le funkcijo \path{setData(podatki)} na objektu, ki mu želimo nastaviti podatke. Ovojnica nudi tudi transformacije med kvaternioni in evklidskimi koti in razrede za transformacije in kamere.
 
@@ -665,8 +664,8 @@ Senčilniki so podprogrami za izris, ki jih mora napisati uporabnik. V starejši
 \item [Naknadna obdelava oglišč] je faza, v kateri se liki iz prejšnjih faz zavržejo, če ne spadajo v pogled kamere, oziramo razrežejo, če so delno v pogledu kamere. Po želji se lahko podatki tu shranijo v medpomnilnik, da jih ni potrebno ponovno računati, če se ne bodo spreminjali.
 \item [Sestavljanje osnovnih likov] je faza, v kateri se podatki iz prejšnjih faz pretvorijo v osnovne like, ki smo jih hoteli izrisati. Naprimer, če so vhodni podatki trikotniki, želimo pa le izris črt, se bo tu vsak trikotnik razdelil v tri črte. Tu se lahko cevovod konča, če želimo le izračunati podatke za pozneje, ne pa jih tudi izrisati. 
 \item [Rasterizacija] je faza, kjer se osnovni liki razdelijo v diskretne delce, ki služijo izračunu končne barve piksla.
-\item [Senčilnik za drobce]izračuna barvo piksla in njegovo globina. Ta del cevovoda je neobvezen, vendar se, če ga ni, izračuna le globina delca.
-\item [Procesiranje drobcev] je faza kjer se, če uporabnik tako nastavi, določi kateri delci, izmed tistih na istem položaju, se bodo obdržali glede na globino, šablono in druge lastnosti. Na koncu se barve prosojnih delcev zmešajo, nato pa se rezultat zapiše na zaslon ali v medpomnilnik za okvirje.
+\item [Senčilnik za drobce]izračuna barvo piksla in njegovo globina. Ta del cevovoda je neobvezen, vendar se, če ga ni, izračuna le globina drobca.
+\item [Procesiranje drobcev] je faza kjer se, če uporabnik tako nastavi, določi kateri drobci, izmed tistih na istem položaju, se bodo obdržali glede na globino, šablono in druge lastnosti. Na koncu se barve prosojnih drobcev zmešajo, nato pa se rezultat zapiše na zaslon ali v medpomnilnik za okvirje.
 \end{description}
 
 Poleg teh senčilnikov OpenGL podpira še senčilnike za izračun, ki pa se ne izvajajo v cevovodu in so namenjeni izračunu poljubnih podatkov.
@@ -735,7 +734,11 @@ Poleg že naštetega ovojnica vsebuje še funkcijo za razhroščevanje, ki napak
 
 \section{Samostojna aplikacija}
 
-Funkcionalnost orodja sem najprej implementiral kot samostojno aplikacijo, saj je tako lažje preveriti pravilnost delovanja. Aplikacija nima uporabniškega vmesnika, implementiran pa je le osnovni uporabniški nadzor, saj služi le kot primer delovanja, ne pa tudi dejanski uporabi. Sestavljena je iz testnega razreda, razreda ki implementira dejansko funkcionalnost in razredov za branje Obj datotek, ki pa niso uporabljeni v končni aplikaciji, saj ima ta svoj bralnik. Posnetki se v samostojni aplikaciji ob zagonu naložijo avtomatsko iz testnih datotek.
+Funkcionalnost orodja sem najprej implementiral kot samostojno aplikacijo, saj je tako lažje preveriti pravilnost delovanja. Aplikacija nima grafičnega uporabniškega vmesnika, implementiran pa je le osnovni uporabniški nadzor, saj služi le kot primer delovanja, ne pa tudi dejanski uporabi. Sestavljena je iz testnega razreda, razreda ki implementira dejansko funkcionalnost in razredov za branje Obj datotek, ki pa niso uporabljeni v končni aplikaciji, saj ima ta svoj bralnik. 
+
+Ob zagonu se ustvari okno in nastavijo osnovne OpenGL nastavitve, kot so globinski test in prosojnost. Iz tekstnih datotek se naložijo mrežni model in rentgenski posnetek, naložijo in prevedejo pa se tudi senčilniki. Ustvari se še medpomnilnik za okvir in njemu pripadajoča tekstura, ki bosta uporabljena za hranjena izrisa iz pogleda projektorja.
+
+Vsa funkcionalnost v povezavi z medpomnilniki, senčilniki, teksturami, programi, točkovnimi nizi in transformacijami je implementirana s pomočjo programske ovojnice opisane v poglavju \ref{ovojnica}.
 
 \begin{figure}[h]
 \begin{center}
@@ -745,27 +748,73 @@ Funkcionalnost orodja sem najprej implementiral kot samostojno aplikacijo, saj j
 \label{samostojnaaplikacija}
 \end{figure}
 
-\subsection*{Premikanje pogleda}
 
-Aplikacija podpira dva pogleda, pogled iz kamere ter pogled iz projektorja. Pogled iz kamere je glavni pogled, v katerem naj bi si uporabnik ogledoval model, na katerega je projicirana tekstura. V tem pogledu je mogoče s kamero poljubno premikati in krožiti okrog modela in projektorja, medtem ko sta ta pri miru. Pogled iz projektorja je namenjen poravnavi projicirane teksture z modelom. V tem pogledu se prizorišče izrisuje iz iste smeri kot sveti projektor, s premikanjem le-tega pa uporabnik poravnava 2D in 3D posnetka.
+\subsection{2D posnetek}
 
-\subsection*{2D posnetek}
+Dvo dimenzionalni posnetek je rentgenska slika ožilja. Slika se projicira na pravokotnik, ki je prilagojen velikosti slike. Sliko se da v prostoru rotirati neodvisno od modela, kar služi poravnavi, ko pa sta model in slika poravnana, se lahko rotira skupaj z modelom.
 
-Dvo dimenzionalni posnetek je rentgenska slika ožilja. Slika se projecira na pravokotnik, ki je prilagojen velikosti slike. Sliko se da v prostoru rotirati neodvisno od modela, kar služi poravnavi, ko pa sta model in slika poravnana, se lahko rotira skupaj z modelom.
+Ko se slika v program naloži, se najprej ustvari tekstura, nato pa se v pomnilnik grafične procesne enote naložijo podatki. Nastavi se tudi velikost pravokotnika, na katerega bo projicirana tekstura.
 
-\subsection*{3D posnetek}
+\subsection{3D posnetek}
 
 Tri dimenzionalni posnetek je mrežni model ožilja, naložen iz Obj datoteke. 3D posnetek se sam po sebi ne premika, premika se le kamera, kar pa da uporabniku podoben vtis.
 
+Ko se mrežni model naloži v program, se ustvarijo medpomnilniki za seznam oglišč, za normale in za seznam elementov. V grafični pomnilnik se nato naložijo podatki, v točkovni niz modela pa se shrani stanje, potrebno za izris. 
+
+\subsection{Premikanje pogleda}
+
+Aplikacija podpira dva pogleda, pogled iz kamere ter pogled iz projektorja. Pogled iz kamere je glavni pogled, v katerem naj bi si uporabnik ogledoval model, na katerega je projicirana tekstura. V tem pogledu je mogoče s kamero poljubno premikati in krožiti okrog modela in projektorja, medtem ko sta ta pri miru. Pogled iz projektorja je namenjen poravnavi projicirane teksture z modelom. V tem pogledu se prizorišče izrisuje iz iste smeri kot sveti projektor, s premikanjem le-tega pa uporabnik poravnava 2D in 3D posnetka.
+
+\subsection{Izris}
+
+Izris je deljen na dva dela. V prvem delu se model izrisuje v globinsko teksturo, v drugem delu pa se izriše model, nanj pa se projicira tekstura. Prvi del se izrisuje le, če je bil med prejšnjim in trenutnim izrisom premaknjen projektor, saj drugače ni smiselno izrisovati, ker ni sprememb. Drugi del se izrisuje, če je bila premaknjena kamera ali pa projektor, saj se bo premaknil ali model ali pa projekcija nanj.
+
+V prvem delu se za tarčo izrisa nastavi medpomnilnik za okvir, ki hrani globinsko teksturo, naloži se stanje iz točkovnega niza za model in nastavijo se parametri OpenGL programa za izris. Model se izriše, pri tem pa se porežejo prednje ploskve modela, saj to zaradi omejitve natančnosti zapisa števil v računalniku povzroča artefakte pri izrisu, kot prikazuje slika \ref{renderingartifact}. Za izris je uporabljen OpenGL program, ki zapiše le globino.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=10cm, height=10cm, keepaspectratio=true]{Rendering_artifact.png}
+\end{center}
+\caption{Pravokotnik na sliki je popolnoma raven in ni teksturiran, vendar pa zaradi nenatančnosti predstavitve podatkov izgleda, kot da meče senco nase v valovnatem vzorcu.}
+\label{renderingartifact}
+\end{figure}
+
+V drugem delu se nastavita teksturi za globino in projekcijo, nastavijo se parametri OpenGL programa in naloži se stanje iz točkovnega niza za model. Za izris modela je uporabljen OpenGL program, ki na model projicira teksturo rentgenske slike. Če uporabnik želi, se nastavijo podatki in se izriše pravokotnik s tekturo ožilja, ki služi za pomoč pri poravnavi modela in slike. Ta kvader se izriše z OpenGL programom za teksturirane objekte.
+
+\subsection{OpenGL programi}
+
+V aplikaciji sem uporabil 6 senčilnikov, ki skupaj tvorijo 3 OpenGL programe. Najosnovnejši je program za beleženje globine, ki je potreben za metanje senc, sledi mu program za izris modela s teksturo, temu pa program za izris modela s projicirano teksturo.
+
+\subsubsection*{Program za beleženje globine}
+
+Program za beleženje globine je sestavljen iz senčilnika za oglišča in senčilnika za drobce. Senčilnik za oglišča dobi kot vhodni parameter položaj oglišča in matrike za preslikavo iz koordinatnega sistema modela v koordinatni sistem zaslona. Kot izhodni parameter da le nov položaj oglišča. Senčilnik za drobce nato zabeleži globino drobca, barvo pa ignorira.
+
+\subsubsection*{Program za izris modela s teksturo}
+
+Ta OpenGL program se uporablja za izris pravokotnika, ki služi poravnavi ožilja in teksture. Sestavljen je iz dveh senčilnikov, senčilnika za oglišča in senčilnika za drobce. Prvi vzame kot vhodne parametre koordinate oglišča in matrike za preslikavo iz koordinatnega sistema modela v koordinatni sistem zaslona, kot izhod pa poda nov položaj oglišča. Senčilnik za drobce dobi kot dodatne vhodne parametre še teksturno koordinato drobca, njegovo prosojnost ter teksturo. Kot izhod zapiše barvo teksture na položaju, ki ga določa vhodni parameter.
+
+\subsubsection*{Program za izris modela s projicirano teksturo}
+
+Tudi ta OpenGL program je sestavljen iz dveh senčilnikov, prvi za oglišča, drugi za drobce. Senčilnik za oglišča dobi kot vhodne parametre položaj in normalo oglišča, smer luči ter matrike za preslikavo oglišč iz koodrinatnega sistema modela v koordinatni sistem zaslona iz pogleda kamere in iz pogleda projektorja. Izhodi so položaj oglišča iz obeh pogledov ter normale. Vhodi v senčilnik za drobce so poleg izhodov iz prejšnjega senčilnika še teksturi s sliko in globino ter razmerje širine in višine med zaslonom in projicirano teksturo. Koordinate v teksturama senčilnik izračuna tako, da najprej koordinate v pogledu projektorja pomnoži z razmerjem med velikostjo slike in zaslonom, nato pa jih v koordinate zaslona spremeni z matriko \ref{preslikavavzaslon}. Če je trenuten drobec viden iz pogleda projektorja, se s skalarnim produktom med smerjo svetlobe in normalo izračuna intenzivnost svetlobe projektorja, iz teksture z rentgensko sliko pa se vzame njegova barva. Če drobec ni viden, se pobarva rdeče. Izhod iz tega senčilnika je le barva.
+
+
 \section{Integracija v aplikacijo za vizualizacijo}
 
-Za konec sem funkcionalnost integriral še v aplikacijo za vizualizacijo. Poleg funkcionalnosti samostojne aplikacije je bilo potrebno zagotoviti, da se modul obnaša čim bolj podobno že obstoječi aplikaciji, kar pa ni bilo čisto mogoče, saj modul uporablja drugačno vrsto kamere kot preostala aplikacija. 
+Za konec sem funkcionalnost integriral še v aplikacijo za vizualizacijo. Poleg funkcionalnosti samostojne aplikacije je bilo potrebno zagotoviti, da se modul obnaša čim bolj podobno že obstoječi aplikaciji. Potrebno je bilo prirediti funkcionalnost za nalaganje datotek in premikanju pogleda. Težav pri integraciji praktično ni bilo, v veliki meri zaradi predhodne samostojne aplikacije.
 
-\subsection*{Premikanje pogleda}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=\textwidth, height=10cm, keepaspectratio=true]{koncna_implementacija.png}
+\end{center}
+\caption{Končni izgled aplikacije med izrisom mreže modela.}
+\label{renderingartifact}
+\end{figure}
 
-Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami za premik levo, desno, naprej in nazaj ter s tipkama 'r' in 'f' za gor in dol. Obrača se s tipkami 'w', 'a', 's', 'd', 'q' in 'e' ter z miško, tako da se lev miškin gumb drži nad objektom in miško premika. Premikanje z miško je, podobno kot v že obstoječi aplikaciji, narejeno s projekcijo kazalca na navidezno kroglo okoli modela, vendar pa je zaradi drugačne vrste kamere izračun preseka drugačen.
+\subsection{Premikanje pogleda}
 
-\subsection*{Nalaganje datotek}
+Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami za premik levo, desno, naprej in nazaj ter s tipkama 'r' in 'f' za gor in dol. Obrača se s tipkami 'w', 'a', 's', 'd', 'q' in 'e' ter z miško, tako da se lev miškin gumb drži nad objektom in miško premika. Premikanje z miško je, podobno kot v že obstoječi aplikaciji, narejeno s projekcijo kazalca na navidezno kroglo okoli modela, vendar pa uporabljajo senčilniki v obstoječi aplikaciji perspektivno projekcijo, kamera v dodatni funkcionalnosti pa uporablja ortografsko projekcijo.
+
+\subsection{Nalaganje datotek}
 Funkcionalnost za nalaganje datotek je obstajala že v osnovni aplikaciji. Uporabnik s pritiskom na gumb \emph{'odpri'} dobi pojavno okno, v katerem izbira datoteke. Podprti formati so bili Mhd za volumetrične datoteke, ter Obj za mrežne modele. Moral sem dodati še možnost za nalaganje slikovnih datotek v standardnih formatih Jpeg in Png \cite{png}. Java podpira ta dva formata v svoji standardni knjižnici, tako da je bila implementacija preprosta.
 
 \chapter{Zaključek}
