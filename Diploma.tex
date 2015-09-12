@@ -45,8 +45,8 @@
 \newcommand{\tsubject}{\ttitle}
 \newcommand{\tsubjectEn}{\ttitleEn}
 \newcommand{\tauthor}{Jure Kolenko}
-\newcommand{\tkeywords}{OpenGL, GLSL, projekcija, poravnava}
-\newcommand{\tkeywordsEn}{OpenGL, GLSL, projection, alignment}
+\newcommand{\tkeywords}{OpenGL, GLSL, projekcija, poravnava, senčilniki}
+\newcommand{\tkeywordsEn}{OpenGL, GLSL, projection, alignment, shaders}
 
 
 
@@ -308,7 +308,7 @@ Svojim staršem.
 % povzetek
 \addcontentsline{toc}{chapter}{Povzetek}
 \chapter*{Povzetek}
-Napisal sem razširitev za aplikacijo, ki prikazuje model ožilja v prostoru. Razširitev uporabniku omogoča poravnavo 2D rentgenskega posnetka s 3D mrežnim modelom. Model se pri poravnavi premika neodvisno od projekcije, ko pa je uporabnik zadovoljen pa lahko projekcijo in model zaklene, tako da se premikata skupaj. Premikanje in rotiranje je možno z miško ali s tipkovnico. Za lažje programiranje sem napisal programsko ovojnico, ki nizkonivojske koncepte OpenGL predstavi bolj razumljivo.
+Napisal sem razširitev za aplikacijo, ki prikazuje model ožilja v prostoru. Razširitev uporabniku omogoča poravnavo 2D rentgenskega posnetka s 3D mrežnim modelom. Model se pri poravnavi premika neodvisno od projekcije, ko pa je uporabnik zadovoljen pa lahko projekcijo in model zaklene, tako da se premikata skupaj. Premikanje in rotiranje je možno z miško ali s tipkovnico. Za hitrejši izris sem uporabil aplikacijski programski vmesnik za strojno pospešen izris OpenGL in njegovo funkcionalnost senčilnikov. Za lažje programiranje sem napisal programsko ovojnico, ki nizkonivojske koncepte OpenGL predstavi bolj razumljivo. 
 
 \bigskip
 
@@ -321,7 +321,7 @@ Napisal sem razširitev za aplikacijo, ki prikazuje model ožilja v prostoru. Ra
 \selectlanguage{english}
 \addcontentsline{toc}{chapter}{Abstract}
 \chapter*{Abstract}
-I wrote an extension for an application that displays a model of a vascular system of a patient. The extension allows the user to align a 2D x-ray image with a 3D mesh. The model moves independently from the projection, but when the user is satisfied with the alignment, they can lock the projection and the model together, so they move in unison. Moving and rotating the model is possible with the mouse and keyboard. For easier development I first wrote a wrapper for OpenGL, which presents low level OpenGL concepts more understandably.
+I wrote an extension for an application that displays a model of a vascular system of a patient. The extension allows the user to align a 2D x-ray image with a 3D mesh. The model moves independently from the projection, but when the user is satisfied with the alignment, they can lock the projection and the model together, so they move in unison. Moving and rotating the model is possible with the mouse and keyboard. For faster rendering I utilized the OpenGL application programming interface and its shader functionality. For easier development I first wrote a wrapper for OpenGL, which presents low level OpenGL concepts more understandably.
 \bigskip
 
 \noindent\textbf{Keywords:} \tkeywordsEn.
@@ -616,7 +616,24 @@ Za izris s projekcijo moramo, če je delec viden, izračunati kje v sliki se ta 
 \chapter{Implementacija}
 \section{Programska ovojnica za LWJGL} \label{ovojnica}
 
-Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnici LWJGL. OpenGL zahteva veliko vodenja podatkov o stanju, saj je potrebno vsa sredstva, kot so medpomnilniki, senčilniki, teksture in več, ročno uničiti, da se pomnilnik na grafični enoti ne zasiči. Ovojnica to poenostavi tako, da OpenGL sredstva zavije v smiselno poimenovane razrede, kar skrajša in polepša kodo. Naprimer za napolnitev medpomnilnika za sezname je potrebno zaporedje funkcij \path{glBindBuffer(tip_medpomnilnika, id_medpomnilnika)} in \path{glBufferData{tip_medpomnilnika, podatki, uporaba_medpomnilnika}}, z uporabo ovojnice pa se kliče le funkcijo \path{setData(podatki)} na objektu, ki mu želimo nastaviti podatke. Ovojnica nudi tudi transformacije med kvaternioni in evklidskimi koti in razrede za transformacije in kamere.
+Za lažje delo z OpenGL sem napisal programsko ovojnico, ki temelji na knjižnici LWJGL. Ovojnica nudi funkcionalnost za transformacije med kvaternioni in evklidskimi koti in razrede za transformacije in kamere. OpenGL zahteva veliko vodenja podatkov o stanju, saj je potrebno vsa sredstva, kot so medpomnilniki, senčilniki, teksture in več, ročno uničiti, da se pomnilnik na grafični enoti ne zasiči. Ovojnica to poenostavi tako, da OpenGL sredstva zavije v smiselno poimenovane razrede, kar skrajša in polepša kodo. Primer okrajšave kode je prevajanje senčilnikov, kjer ovojnica več klicev za prevajanje in preverjanje napak zavije v eno samo funkcijo \path{prevedi} (angl. compile), prikazano v odseku kode \ref{compilefunction}.
+
+{
+\renewcommand{\lstlistingname}{Odsek kode}
+\footnotesize
+\begin{lstlisting}[captionpos=b, frame=single, caption={Funkcija za prevajanje senčilnikov s preverjanjem za napake.}, breaklines=true, firstline=1, numbers=left, tabsize=4, label=compilefunction]
+public void compile() throws GLShaderCompileException
+{
+	GL20.glCompileShader(shaderID);
+	int compileStatus = GL20.glGetShaderi(shaderID, GL20.GL_COMPILE_STATUS);
+	if(compileStatus != GL11.GL_TRUE)
+	{
+		int len = GL20.glGetShaderi(shaderID, GL20.GL_INFO_LOG_LENGTH);
+		String infoLog = GL20.glGetShaderInfoLog(shaderID, len);
+		throw new GLShaderCompileException(infoLog);
+	}
+}
+\end{lstlisting}}
 
 \begin{figure}[h!]
 \begin{center}
