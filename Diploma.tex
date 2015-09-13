@@ -768,13 +768,11 @@ Ovojnica podpira več vrst izjem. OpenGL sam ne ustavi izvajanja programa ob nap
 
 Poleg že naštetega ovojnica vsebuje še funkcijo za razhroščevanje, ki napake, ki jih vrača OpenGL, pretvori v berljive nize ter izpiše vrstico v kateri je bila funkcija klicana, kar močno olajša iskanje napak.
 
-
-
 \section{Samostojna aplikacija}
 
-Funkcionalnost orodja sem najprej implementiral kot samostojno aplikacijo, saj je tako lažje preveriti pravilnost delovanja. Aplikacija nima grafičnega uporabniškega vmesnika, implementiran pa je le osnovni uporabniški nadzor, saj služi le kot primer delovanja, ne pa tudi dejanski uporabi. Sestavljena je iz testnega razreda, razreda ki implementira dejansko funkcionalnost in razredov za branje Obj datotek, ki pa niso uporabljeni v končni aplikaciji, saj ima ta svoj bralnik. 
+Funkcionalnost orodja sem najprej implementiral kot samostojno aplikacijo, saj je tako lažje preveriti pravilnost delovanja. Aplikacija nima grafičnega uporabniškega vmesnika, implementiran pa je le osnovni uporabniški nadzor, saj služi le kot primer delovanja, ne pa tudi dejanski uporabi. Sestavljena je iz testnega razreda, razreda, ki implementira dejansko funkcionalnost, in razredov za branje Obj datotek, ki pa niso uporabljeni v končni aplikaciji, saj ima ta svoj bralnik. 
 
-Ob zagonu se ustvari okno in nastavijo osnovne OpenGL nastavitve, kot so globinski test in prosojnost. Iz tekstnih datotek se naložijo mrežni model in rentgenski posnetek, naložijo in prevedejo pa se tudi senčilniki. Ustvari se še medpomnilnik za okvir in njemu pripadajoča tekstura, ki bosta uporabljena za hranjena izrisa iz pogleda projektorja.
+Ob zagonu se ustvari okno in nastavijo osnovne OpenGL nastavitve, kot so globinski test in prosojnost. Iz testnih datotek se naložijo mrežni model in rentgenski posnetek, naložijo in prevedejo pa se tudi senčilniki. Ustvari se še medpomnilnik za okvir in njemu pripadajoča tekstura, ki bosta uporabljena za hranjenje izrisa iz pogleda projektorja.
 
 Vsa funkcionalnost v povezavi z medpomnilniki, senčilniki, teksturami, programi, točkovnimi nizi in transformacijami je implementirana s pomočjo programske ovojnice opisane v poglavju \ref{ovojnica}.
 
@@ -833,7 +831,7 @@ Ta OpenGL program se uporablja za izris pravokotnika, ki služi poravnavi ožilj
 
 \subsubsection*{Program za izris modela s projicirano teksturo}
 
-Tudi ta OpenGL program je sestavljen iz dveh senčilnikov, prvi za oglišča, drugi za drobce. Senčilnik za oglišča dobi kot vhodne parametre položaj in normalo oglišča, smer luči ter matrike za preslikavo oglišč iz koodrinatnega sistema modela v koordinatni sistem zaslona iz pogleda kamere in iz pogleda projektorja. Izhodi so položaj oglišča iz obeh pogledov ter normale. Vhodi v senčilnik za drobce so poleg izhodov iz prejšnjega senčilnika še teksturi s sliko in globino ter razmerje širine in višine med zaslonom in projicirano teksturo. Koordinate v teksturama senčilnik izračuna tako, da najprej koordinate v pogledu projektorja pomnoži z razmerjem med velikostjo slike in zaslonom, nato pa jih v koordinate zaslona spremeni z matriko \ref{preslikavavzaslon}. Če je trenuten drobec viden iz pogleda projektorja, se s skalarnim produktom med smerjo svetlobe in normalo izračuna intenzivnost svetlobe projektorja, iz teksture z rentgensko sliko pa se vzame njegova barva. Če drobec ni viden, se pobarva rdeče. Izhod iz tega senčilnika je le barva.
+Tudi ta OpenGL program je sestavljen iz dveh senčilnikov, prvi za oglišča, drugi za drobce. Senčilnik za oglišča dobi kot vhodne parametre položaj in normalo oglišča, smer luči ter matrike za preslikavo oglišč iz koodrinatnega sistema modela v koordinatni sistem zaslona iz pogleda kamere in iz pogleda projektorja. Izhodi so položaj oglišča iz obeh pogledov ter normale. Vhodi v senčilnik za drobce so poleg izhodov iz prejšnjega senčilnika še teksturi s sliko in globino ter razmerje širine in višine med zaslonom in projicirano teksturo. Koordinate v teksturama senčilnik izračuna tako, da najprej koordinate v pogledu projektorja pomnoži z razmerjem med velikostjo slike in zaslonom, nato pa jih v koordinate zaslona spremeni z matriko \ref{preslikavavzaslon}. Če je trenuten drobec viden iz pogleda projektorja, se s skalarnim produktom med smerjo svetlobe in normalo izračuna intenzivnost svetlobe projektorja, iz teksture z rentgensko sliko pa se vzame njegova barva. Če drobec ni viden, se pobarva rdeče. Izhod iz tega senčilnika je barva.
 
 
 \section{Integracija v aplikacijo za vizualizacijo}
@@ -850,7 +848,7 @@ Za konec sem funkcionalnost integriral še v aplikacijo za vizualizacijo. Poleg 
 
 \subsection{Premikanje pogleda}
 
-Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami za premik levo, desno, naprej in nazaj ter s tipkama 'r' in 'f' za gor in dol. Obrača se s tipkami 'w', 'a', 's', 'd', 'q' in 'e' ter z miško, tako da se lev miškin gumb drži nad objektom in miško premika. Premikanje z miško je, podobno kot v že obstoječi aplikaciji, narejeno s projekcijo kazalca na navidezno kroglo okoli modela, vendar pa uporabljajo senčilniki v obstoječi aplikaciji perspektivno projekcijo, kamera v dodatni funkcionalnosti pa uporablja ortografsko projekcijo.
+Model žil se premika enako kot v že obstoječi aplikaciji, s smernimi tipkami za premik levo, desno, naprej in nazaj ter s tipkama 'r' in 'f' za gor in dol. Obrača se s tipkami 'w', 'a', 's', 'd', 'q' in 'e' ter z miško, tako da se lev miškin gumb drži nad objektom in miško premika. Premikanje z miško je, podobno kot v že obstoječi aplikaciji, narejeno s projekcijo kazalca na navidezno kroglo okoli modela, vendar pa uporabljajo senčilniki v obstoječi aplikaciji perspektivno projekcijo, kamera v dodatni funkcionalnosti pa uporablja ortografsko projekcijo, zato je izračun nekoliko drugačen.
 
 \subsection{Nalaganje datotek}
 Funkcionalnost za nalaganje datotek je obstajala že v osnovni aplikaciji. Uporabnik s pritiskom na gumb \emph{'odpri'} dobi pojavno okno, v katerem izbira datoteke. Podprti formati so bili Mhd za volumetrične datoteke, ter Obj za mrežne modele. Moral sem dodati še možnost za nalaganje slikovnih datotek v standardnih formatih Jpeg in Png \cite{png}. Java podpira ta dva formata v svoji standardni knjižnici, tako da je bila implementacija preprosta.
@@ -858,7 +856,7 @@ Funkcionalnost za nalaganje datotek je obstajala že v osnovni aplikaciji. Upora
 \chapter{Zaključek}
 V diplomskem delu sem implementiral projekcijo 2D rentgenske slike na 3D mrežni model. Vhodni podatki so mrežni modeli v datotekah tipa Obj in rentgenske slike tipa obj. Mrežni modeli so bili pretvorjeni iz Mhd datotek v mrežne modele v okviru že obstoječe aplikacije NeckVeins.
 
-Implementacija je bila napisana v programskem jeziku Java, kar je omogočilo brezhibno integracijo v že obstoječo aplikacijo. Za lažji in hitrejši razvoj sem razvil še programsko ovojnico za LWJGL, ki hrani stanje OpenGL objektov in ima bolj berljivo poimenovane funkcije.
+Implementacija je bila napisana v programskem jeziku Java, kar je omogočilo brezhibno integracijo v že obstoječo aplikacijo. Za lažji in hitrejši razvoj sem razvil še programsko ovojnico za LWJGL, ki hrani stanje OpenGL objektov in ima bolj berljivo poimenovane funkcije. Za hitrejši izris sem uporabil OpenGL funkcionalnost senčilnikov.
 
 V okviru nadaljnjega dela bi lahko implementiral algoritem za avtomatsko poravnavo 2D in 3D posnetkov \cite{6507588}.
 
